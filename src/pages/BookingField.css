@@ -1,0 +1,28 @@
+.booking-page {
+    flex-grow: 1;
+    padding: 0px;
+    padding-left: 80px;
+    padding-bottom: 20px;
+    padding-top: 10px;
+  }
+
+  .booking-page.expanded{
+    margin-left: 170px;
+    padding-right: 30px;
+    padding-top: 0px;
+  }
+  .content {
+    flex-grow: 1;
+    padding: 0px;
+  }
+  
+  .content.expanded {
+    margin-left: 0px;
+  }
+  
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+  }

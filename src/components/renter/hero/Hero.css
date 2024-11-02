@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+
+.hero-title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.hero-subtitle {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.btn-book-now {
+  background-color: #ff7f50 !important; /* Màu nền nút */
+  color: white !important; /* Màu chữ */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px; /* Bo góc */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-book-now:hover {
+  background-color: #e67349 !important; /* Màu khi hover */
+}
+
+.navbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  width: 200px;
+  padding: 20px;
+  background-color: transparent;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #ff7f50;
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 120px;
+}
+
+.footer {
+  width: 100%;
+  padding: 20px;
+  background-color: #333;
+  text-align: center;
+  color: white;
+  position: absolute;
+  bottom: 0;
+}
+
+.footer a {
+  color: #ff7f50;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #e67349;
+}
+
+.notification {
+  background-color: rgba(0, 0, 0, 0.7); /* Màu nền đen trong suốt */
+  padding: 30px; /* Tăng khoảng cách bên trong */
+  border-radius: 12px; /* Bo góc mềm mại */
+  text-align: center;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng */
+  width: 400px; /* Đặt chiều rộng cố định */
+  margin: 0 auto; /* Căn giữa theo chiều ngang */
+  color: white; /* Màu chữ trắng */
+  animation: fadeIn 0.5s ease-in-out; /* Hiệu ứng mờ dần khi hiển thị */
+}
+
+.notification h6 {
+  font-size: 20px; /* Tăng kích thước chữ */
+  margin-bottom: 20px; /* Khoảng cách giữa tiêu đề và các nút */
+  color: #f1f1f1; /* Màu chữ nhẹ hơn */
+}
+
+.notification button {
+  background-color: #4CAF50; /* Màu nền nút (màu xanh lá) */
+  color: white;
+  border: none;
+  padding: 12px 20px; /* Tăng kích thước nút */
+  font-size: 16px;
+  border-radius: 8px;
+  margin: 10px 5px; /* Khoảng cách giữa các nút */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu khi hover */
+}
+
+.notification button:hover {
+  background-color: #45a049; /* Màu nền khi hover */
+}
+
+.notification button:focus {
+  outline: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
