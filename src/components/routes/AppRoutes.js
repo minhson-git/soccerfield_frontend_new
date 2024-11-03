@@ -1,16 +1,20 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LayoutAdmin from "../admin/layout/Layout";
 import NotFound from "../PageNotFound";
+import Branch from "../admin/pages/Branch/Branch";
+import Login from "../Login";
+import Hero from "../../components/renter/hero/Hero";
+import Spinner from "../admin/global/Spinner";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/admin",
     element: <LayoutAdmin />,
     children: [
       {
         index: true,
         path: "branch",
-        element: <h1>Branch</h1>,
+        element: <Branch />,
       },
       {
         path: "field",
@@ -28,11 +32,19 @@ const router = createBrowserRouter([
         path: "role",
         element: <h1>Role</h1>,
       },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/",
+    element: <Hero />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 

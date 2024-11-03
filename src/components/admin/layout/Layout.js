@@ -17,15 +17,15 @@ const LayoutAdmin = () => {
 
   const getPageName = (path) => {
     switch (path) {
-      case "/branch":
+      case "/admin/branch":
         return "Branch";
-      case "/field":
+      case "/admin/field":
         return "Field";
-      case "/booking":
+      case "/admin/booking":
         return "Booking";
-      case "/users":
+      case "/admin/users":
         return "Users";
-      case "/Role":
+      case "/admin/Role":
         return "Role";
       default:
         return "Home";
@@ -47,7 +47,7 @@ const LayoutAdmin = () => {
             justifyContent: "space-between",
           }}
         >
-          <Navigate to="/branch" />
+          {/* <Navigate to="/admin/branch" /> */}
           <div style={{ display: "flex", alignItems: "center" }}>
             <Button
               type="text"

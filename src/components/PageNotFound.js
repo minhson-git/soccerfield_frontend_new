@@ -24,7 +24,7 @@ export default function NotFound() {
             type="primary"
             style={{ color: "#fff", backgroundColor: "#d71e35" }}
           >
-            <Link to="/">Trở về trang chủ</Link>
+            <Link to="/">Back to home page</Link>
           </Button>
         }
       />
