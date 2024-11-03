@@ -5,7 +5,7 @@
 }
 
 .content {
-  flex-grow: 1; 
+  flex-grow: 1;
 }
 
 .App-logo {
@@ -42,7 +42,8 @@
     transform: rotate(360deg);
   }
 }
-html, body {
+html,
+body {
   /* height: 100%; */
   margin: 0;
   padding: 0;
@@ -53,4 +54,25 @@ footer {
   padding: 1rem;
   text-align: center;
   flex-shrink: 0; /* Không co lại để footer giữ nguyên kích thước */
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 17px;
+}
+
+.logo-circle {
+  width: 35px;
+  height: 35px;
+  background-color: #000000;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+}
+
+.image {
+  border-radius: 30%;
+  width: 35px;
 }

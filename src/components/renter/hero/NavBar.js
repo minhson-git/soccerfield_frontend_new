@@ -2,7 +2,7 @@
 import React from 'react';
 import { Box, List, ListItem, ListItemText } from '@mui/material';
 import styled from 'styled-components';
-import logo from '../../assets/images/logo.png'; // Path to the logo
+import logo from '../../../assets/images/logo.png'; // Path to the logo
 
 const NavBarContainer = styled(Box)`
   position: absolute;
