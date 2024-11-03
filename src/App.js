@@ -24,9 +24,6 @@
 
 //   return (
 //     <div className="app">
-//       <Routes>
-//         <Route path="/admin" element={<LayoutAdmin />} />
-//       </Routes>
 
 //       {/* <div className="content">
 //         {!hideHeaderPaths.includes(location.pathname) && <Header />}
@@ -80,17 +77,12 @@
 
 // export default App;
 
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import AppRouter from "./components/routes/AppRoutes";
+import React from "react";
 import "./App.css";
+import AppRouter from "./components/routes/AppRoutes";
 
 const App = () => {
-  createRoot(document.getElementById("root")).render(
-    <StrictMode>
-      <AppRouter />
-    </StrictMode>
-  );
+  return <AppRouter />;
 };
 
 export default App;

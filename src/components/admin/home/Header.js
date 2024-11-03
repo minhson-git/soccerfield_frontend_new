@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Layout, Menu } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 
@@ -15,23 +15,74 @@ const { Sider } = Layout;
 
 const Sidebar = ({ collapsed }) => {
   const location = useLocation();
+  const [selectedKey, setSelectedKey] = useState("1");
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/admin/branch":
+        setSelectedKey("1");
+        break;
+      case "/admin/field":
+        setSelectedKey("2");
+        break;
+      case "/admin/booking":
+        setSelectedKey("3");
+        break;
+      case "/admin/users":
+        setSelectedKey("4");
+        break;
+      case "/admin/role":
+        setSelectedKey("5");
+        break;
+      default:
+        setSelectedKey("1");
+    }
+  }, [location.pathname]);
 
   const getSelectedKey = () => {
     switch (location.pathname) {
-      case "/branch":
+      case "/admin/branch":
         return "1";
-      case "/field":
+      case "/admin/field":
         return "2";
-      case "/booking":
+      case "/admin/booking":
         return "3";
-      case "/users":
+      case "/admin/users":
         return "4";
-      case "/role":
+      case "/admin/role":
         return "5";
       default:
         return "1";
     }
   };
+
+  const menuItems = [
+    {
+      key: "1",
+      icon: <FontAwesomeIcon icon={faBuilding} />,
+      label: <Link to="/admin/branch">Branch</Link>,
+    },
+    {
+      key: "2",
+      icon: <FontAwesomeIcon icon={faClipboard} />,
+      label: <Link to="/admin/field">Field</Link>,
+    },
+    {
+      key: "3",
+      icon: <FontAwesomeIcon icon={faFilePen} />,
+      label: <Link to="/admin/booking">Booking</Link>,
+    },
+    {
+      key: "4",
+      icon: <UserOutlined />,
+      label: <Link to="/admin/users">User</Link>,
+    },
+    {
+      key: "5",
+      icon: <FontAwesomeIcon icon={faStar} />,
+      label: <Link to="/admin/role">Role</Link>,
+    },
+  ];
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -40,23 +91,13 @@ const Sidebar = ({ collapsed }) => {
           <img className="image" alt="Logo" src={logo} />
         </div>
       </div>
-      <Menu theme="dark" mode="inline" selectedKeys={[getSelectedKey()]}>
-        <Menu.Item key="1" icon={<FontAwesomeIcon icon={faBuilding} />}>
-          <Link to="/branch">Branch</Link>
-        </Menu.Item>
-        <Menu.Item key="2" icon={<FontAwesomeIcon icon={faClipboard} />}>
-          <Link to="/field">Field</Link>
-        </Menu.Item>
-        <Menu.Item key="3" icon={<FontAwesomeIcon icon={faFilePen} />}>
-          <Link to="/booking">Booking</Link>
-        </Menu.Item>
-        <Menu.Item key="4" icon={<UserOutlined />}>
-          <Link to="/users">User</Link>
-        </Menu.Item>
-        <Menu.Item key="5" icon={<FontAwesomeIcon icon={faStar} />}>
-          <Link to="/role">Role</Link>
-        </Menu.Item>
-      </Menu>
+      <Menu
+        key={menuItems.key}
+        theme="dark"
+        mode="inline"
+        selectedKeys={[selectedKey]}
+        items={menuItems}
+      />
     </Sider>
   );
 };
