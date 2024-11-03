@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Sidebar from '../components/sidebar/Sidebar';
+import Sidebar from '../components/renter/sidebar/Sidebar';
 import Booking from '../components/renter/booking/Booking';
 import Header from '../components/renter/header/Header';
 import './BookingField.css'

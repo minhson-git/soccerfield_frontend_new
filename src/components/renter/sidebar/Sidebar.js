@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import './Sidebar.css';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import "./Sidebar.css";
+import { Link } from "react-router-dom";
 
-export const Sidebar = ({ isSidebarClosed, toggleSidebar }) => {
+const Sidebar = ({ isSidebarClosed, toggleSidebar }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
-    document.body.classList.toggle('dark', !isDarkMode);
+    document.body.classList.toggle("dark", !isDarkMode);
   };
 
   return (
-    <nav className={`sidebar ${isSidebarClosed ? 'close' : ''}`}>
+    <nav className={`sidebar ${isSidebarClosed ? "close" : ""}`}>
       <header>
         <div className="image-text">
           <span className="image"></span>
@@ -45,7 +45,7 @@ export const Sidebar = ({ isSidebarClosed, toggleSidebar }) => {
               </a>
             </li>
             <li className="nav-link">
-            <Link to="/history">
+              <Link to="/history">
                 <i className="bx bx-time icon"></i>
                 <span className="text nav-text">History</span>
               </Link>
@@ -56,13 +56,13 @@ export const Sidebar = ({ isSidebarClosed, toggleSidebar }) => {
         <div className="bottom-content">
           <li className="" onClick={toggleDarkMode}>
             <div className="sun-moon">
-              <i className={`bx ${isDarkMode ? 'bx-sun' : 'bx-moon'} icon`}></i>
+              <i className={`bx ${isDarkMode ? "bx-sun" : "bx-moon"} icon`}></i>
             </div>
             <span className="mode-text text">
-              {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+              {isDarkMode ? "Light Mode" : "Dark Mode"}
             </span>
             <div className="toggle-switch">
-              <span className={`switch ${isDarkMode ? 'active' : ''}`}></span>
+              <span className={`switch ${isDarkMode ? "active" : ""}`}></span>
             </div>
           </li>
         </div>
