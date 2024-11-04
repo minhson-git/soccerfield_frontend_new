@@ -47,7 +47,7 @@ const LayoutAdmin = () => {
             justifyContent: "space-between",
           }}
         >
-          {/* <Navigate to="/admin/branch" /> */}
+          <Navigate to="/admin/branch" />
           <div style={{ display: "flex", alignItems: "center" }}>
             <Button
               type="text"

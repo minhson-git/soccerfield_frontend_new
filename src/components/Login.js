@@ -27,7 +27,7 @@ const Login = ({ user, onLogin, onLogout }) => {
         description: res.data.message,
       });
       window.sessionStorage.setItem("access_token", res.data.data.token);
-      navigate("/admin/branch");
+      navigate("/home");
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

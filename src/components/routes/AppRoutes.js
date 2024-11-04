@@ -5,6 +5,8 @@ import Branch from "../admin/pages/Branch/Branch";
 import Login from "../Login";
 import Hero from "../../components/renter/hero/Hero";
 import Spinner from "../admin/global/Spinner";
+import Home from "../../pages/Home";
+import BookingField from "../../pages/BookingField";
 
 const router = createBrowserRouter([
   {
@@ -35,12 +37,22 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "/home",
+    element: <Home />,
+    children: [
+      {
+        path: "/home/bookingfield",
+        element: <BookingField />,
+      },
+    ],
   },
   {
     path: "/",
     element: <Hero />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
   {
     path: "*",

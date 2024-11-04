@@ -1,10 +1,12 @@
-import React from 'react';
-import Hero from '../components/hero/Hero';
-import Footer from '../components/Footer';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Footer from "../components/renter/Footer";
+import Header from "../components/renter/header/Header";
 const Home = () => {
   return (
     <div>
-      <Hero />
+      <Header />
+      <Outlet />
       <Footer />
     </div>
   );
