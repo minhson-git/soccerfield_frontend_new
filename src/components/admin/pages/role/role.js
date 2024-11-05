@@ -1,35 +1,37 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { Col, Input, notification, Row, Table } from "antd";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import ActionButtons from "../../global/ActionButtons";
-import ModalCreateBranch from "./modal/ModalCreateBranch";
-import axios from "axios";
-import ModalUpdateBranch from "./modal/ModalUpdateBranch";
+import ModalCreateRole from "./modal/ModalCreateRole";
+import ModalUpdateRole from "./modal/ModalUpdateRole";
 
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
-function Branch() {
+function Role() {
   const [searchText, setSearchText] = useState("");
+
+  const [userData, setUserData] = useState([]);
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
-  const [branchData, setBranchData] = useState("");
-  const [branchUpdateData, setBranchUpdateData] = useState(false);
+  const [roleUpdateData, setRoleUpdateData] = useState([]);
+
   const jwtToken = sessionStorage.getItem("access_token");
 
   useEffect(() => {
-    fetchBranchList();
+    fetchRoleList();
   }, []);
 
-  const fetchBranchList = async () => {
+  const fetchRoleList = async () => {
     try {
-      const res = await axios.get(`${BaseUrl}/branchs`, {
+      const res = await axios.get(`${BaseUrl}/roles`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
       });
-      setBranchData(res.data.data);
+      setUserData(res?.data?.data);
     } catch (error) {}
   };
 
@@ -37,51 +39,41 @@ function Branch() {
     if (modalType === "create" && value) {
     } else if (modalType === "update" && value) {
       setIsUpdateModalOpen("update");
-      setBranchUpdateData(value);
+      setRoleUpdateData(value);
     }
   };
 
-  const handleConfirmDeleteBranch = async (id) => {
+  const handleConfirmDeleteField = async (id) => {
     try {
-      const res = await axios.delete(`${BaseUrl}/branchs/${id}`, {
+      const res = await axios.delete(`${BaseUrl}/roles/${id}`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
       });
-      if (res?.data?.statusCode === 200) {
-        notification.success({
-          message: res?.data?.message,
-        });
-        fetchBranchList();
-      }
+      notification.success({
+        message: res?.data?.message,
+      });
+      fetchRoleList();
     } catch (error) {
-      notification.error({ message: "Fail to delete branch" });
+      notification.error({ message: "Fail to delete role" });
     }
   };
 
   const columns = [
     {
-      title: "Branch Name",
-      dataIndex: "branchName",
-      key: "branchName",
+      title: "id",
+      dataIndex: "id",
+      key: "id",
       align: "center",
-      width: "15%",
+      width: "10%",
       ellipsis: true,
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
       align: "center",
-      width: "20%",
-      ellipsis: true,
-    },
-    {
-      title: "Phone",
-      dataIndex: "phone",
-      key: "phone",
-      align: "center",
-      width: "15%",
+      width: "10%",
       ellipsis: true,
     },
     {
@@ -94,7 +86,7 @@ function Branch() {
           <ActionButtons
             record={record}
             handleUpdateModal={() => handleModal("update", record)}
-            handleDeleteRecord={() => handleConfirmDeleteBranch(record.id)}
+            handleDeleteRecord={() => handleConfirmDeleteField(record.id)}
           />
         );
       },
@@ -114,10 +106,10 @@ function Branch() {
           />
         </Col>
         <Col span={12} style={{ textAlign: "right" }}>
-          <ModalCreateBranch
+          <ModalCreateRole
             isOpen={isCreateModalOpen}
             setIsOpen={setIsCreateModalOpen}
-            fetchBranchList={fetchBranchList}
+            fetchRoleList={fetchRoleList}
             BaseUrl={BaseUrl}
             jwtToken={jwtToken}
           />
@@ -126,22 +118,21 @@ function Branch() {
 
       <Row>
         <Col span={24}>
-          <Table columns={columns} dataSource={branchData} />
+          <Table columns={columns} dataSource={userData} />
         </Col>
       </Row>
 
-      <ModalUpdateBranch
+      <ModalUpdateRole
         isUpdateModalOpen={isUpdateModalOpen}
         setIsUpdateModalOpen={setIsUpdateModalOpen}
-        branchData={branchData}
-        fetchBranchList={fetchBranchList}
         BaseUrl={BaseUrl}
         jwtToken={jwtToken}
-        branchUpdateData={branchUpdateData}
-        setBranchUpdateData={setBranchUpdateData}
+        fetchRoleList={fetchRoleList}
+        roleUpdateData={roleUpdateData}
+        setRoleUpdateData={setRoleUpdateData}
       />
     </>
   );
 }
 
-export default Branch;
+export default Role;

@@ -1,25 +1,29 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { Col, Input, notification, Row, Table } from "antd";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import ActionButtons from "../../global/ActionButtons";
-import ModalCreateBranch from "./modal/ModalCreateBranch";
-import axios from "axios";
-import ModalUpdateBranch from "./modal/ModalUpdateBranch";
+import ModalCreateField from "./modal/ModalCreateField";
+import ModalUpdateField from "./modal/ModalUpdateField";
 
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
-function Branch() {
+function Field() {
   const [searchText, setSearchText] = useState("");
+
+  const [branchList, setBranchList] = useState([]);
+  const [fieldData, setFieldData] = useState([]);
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
-  const [branchData, setBranchData] = useState("");
-  const [branchUpdateData, setBranchUpdateData] = useState(false);
+  const [fieldUpdateData, setFieldUpdateData] = useState([]);
+
   const jwtToken = sessionStorage.getItem("access_token");
 
   useEffect(() => {
     fetchBranchList();
+    fetchFieldList();
   }, []);
 
   const fetchBranchList = async () => {
@@ -29,7 +33,18 @@ function Branch() {
           Authorization: `Bearer ${jwtToken}`,
         },
       });
-      setBranchData(res.data.data);
+      setBranchList(res.data.data);
+    } catch (error) {}
+  };
+
+  const fetchFieldList = async () => {
+    try {
+      const res = await axios.get(`${BaseUrl}/fields`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      });
+      setFieldData(res?.data?.data);
     } catch (error) {}
   };
 
@@ -37,13 +52,13 @@ function Branch() {
     if (modalType === "create" && value) {
     } else if (modalType === "update" && value) {
       setIsUpdateModalOpen("update");
-      setBranchUpdateData(value);
+      setFieldUpdateData(value);
     }
   };
 
-  const handleConfirmDeleteBranch = async (id) => {
+  const handleConfirmDeleteField = async (id) => {
     try {
-      const res = await axios.delete(`${BaseUrl}/branchs/${id}`, {
+      const res = await axios.delete(`${BaseUrl}/fields/${id}`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
@@ -52,34 +67,46 @@ function Branch() {
         notification.success({
           message: res?.data?.message,
         });
-        fetchBranchList();
+        fetchFieldList();
       }
     } catch (error) {
-      notification.error({ message: "Fail to delete branch" });
+      notification.error({ message: "Fail to delete field" });
     }
   };
 
   const columns = [
     {
-      title: "Branch Name",
-      dataIndex: "branchName",
-      key: "branchName",
+      title: "Field Type",
+      dataIndex: "fieldType",
+      key: "fieldType",
       align: "center",
       width: "15%",
       ellipsis: true,
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Price Per House",
+      dataIndex: "pricePerHour",
+      key: "pricePerHour",
       align: "center",
-      width: "20%",
+      width: "15%",
+      ellipsis: true,
+      render: (value) =>
+        `${new Intl.NumberFormat("vi-VN", {
+          style: "decimal",
+        }).format(value)}`,
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      align: "center",
+      width: "10%",
       ellipsis: true,
     },
     {
-      title: "Phone",
-      dataIndex: "phone",
-      key: "phone",
+      title: "Branch",
+      dataIndex: ["branch", "branchName"],
+      key: "branch",
       align: "center",
       width: "15%",
       ellipsis: true,
@@ -94,7 +121,7 @@ function Branch() {
           <ActionButtons
             record={record}
             handleUpdateModal={() => handleModal("update", record)}
-            handleDeleteRecord={() => handleConfirmDeleteBranch(record.id)}
+            handleDeleteRecord={() => handleConfirmDeleteField(record.fieldId)}
           />
         );
       },
@@ -114,10 +141,11 @@ function Branch() {
           />
         </Col>
         <Col span={12} style={{ textAlign: "right" }}>
-          <ModalCreateBranch
+          <ModalCreateField
             isOpen={isCreateModalOpen}
             setIsOpen={setIsCreateModalOpen}
-            fetchBranchList={fetchBranchList}
+            branchList={branchList}
+            fetchFieldList={fetchFieldList}
             BaseUrl={BaseUrl}
             jwtToken={jwtToken}
           />
@@ -126,22 +154,20 @@ function Branch() {
 
       <Row>
         <Col span={24}>
-          <Table columns={columns} dataSource={branchData} />
+          <Table columns={columns} dataSource={fieldData} />
         </Col>
       </Row>
 
-      <ModalUpdateBranch
+      <ModalUpdateField
         isUpdateModalOpen={isUpdateModalOpen}
         setIsUpdateModalOpen={setIsUpdateModalOpen}
-        branchData={branchData}
-        fetchBranchList={fetchBranchList}
         BaseUrl={BaseUrl}
         jwtToken={jwtToken}
-        branchUpdateData={branchUpdateData}
-        setBranchUpdateData={setBranchUpdateData}
+        fieldUpdateData={fieldUpdateData}
+        fetchFieldList={fetchFieldList}
       />
     </>
   );
 }
 
-export default Branch;
+export default Field;
