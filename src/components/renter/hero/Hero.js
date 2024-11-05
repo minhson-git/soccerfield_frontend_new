@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import heroImage from '../../../assets/images/pexels-photo-399187.jpeg'; // Đường dẫn đến hình ảnh
+import heroImage from '../../../assets/images/pexels-photo-399187.jpeg';
 import NavBar from './NavBar';
-import Footer from '../../../components/renter/Footer';
+import Footer from '../footer/Footer';
 import './Hero.css';
 
 const HeroSection = styled(Box)`
@@ -20,21 +20,18 @@ const HeroSection = styled(Box)`
 
 const Hero = () => {
   const navigate = useNavigate();
-  const [showNotification, setShowNotification] = useState(false); // Quản lý trạng thái hiển thị thông báo
+  const [showNotification, setShowNotification] = useState(false); 
 
   const handleBookNow = () => {
-    setShowNotification(true); // Hiển thị thông báo khi bấm "Book Now"
+    setShowNotification(true);
   };
 
   const handleLogin = () => {
-    navigate('/login'); // Điều hướng đến trang đăng nhập
-  };
-
-  const handleGuest = () => {
-    navigate('/bookingfield?role=guest'); // Điều hướng đến trang booking với vai trò khách
+    navigate('/login'); 
   };
 
   return (
+    <>
     <HeroSection>
       <NavBar />
       <Box textAlign="center">
@@ -60,8 +57,9 @@ const Hero = () => {
         )}
       </Box>
     </HeroSection>
+    <Footer/>
+    </>
   );
-<Footer/>
 };
 
 export default Hero;

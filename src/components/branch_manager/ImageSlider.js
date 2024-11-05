@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Box, IconButton, useTheme } from '@mui/material';
+import { ArrowBack, ArrowForward } from '@mui/icons-material';
 
 const ImageSlider = () => {
   const images = [
@@ -8,88 +10,83 @@ const ImageSlider = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const theme = useTheme();
 
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
     }, 5000); // 5 giây chuyển động 1 lần
 
-    return () => clearInterval(interval); 
+    return () => clearInterval(interval);
   }, [currentIndex]);
 
- 
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
+    setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
   };
 
   return (
-    <div style={styles.sliderContainer}>
-      <button onClick={prevSlide} style={{ ...styles.arrow, ...styles.leftArrow }}>
-        &#10094;
-      </button>
+    <Box sx={{ position: 'relative', width: '100%', height: '400px', overflow: 'hidden' }}>
+      {/* Nút quay lại */}
+      <IconButton
+        onClick={prevSlide}
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '10px',
+          transform: 'translateY(-50%)',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          color: 'white',
+          '&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          },
+        }}
+      >
       
-      {images.map((image, index) => (
-        <div
-          key={index}
-          style={{
-            ...styles.slide,
-            transform: `translateX(${(index - currentIndex) * 100}%)`,
-          }}
-        >
-          <img src={image} alt={`Slider ${index}`} style={styles.image} />
-        </div>
-      ))}
-      
-      <button onClick={nextSlide} style={{ ...styles.arrow, ...styles.rightArrow }}>
-        &#10095;
-      </button>
-    </div>
-  );
-};
+      </IconButton>
 
-const styles = {
-  sliderContainer: {
-    position: 'relative',
-    width: '100%',
-    height: '400px',
-    overflow: 'hidden',
-    display: 'flex',
-  },
-  slide: {
-    minWidth: '100%',
-    transition: 'transform 0.5s ease-in-out', 
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-  },
-  arrow: {
-    position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    color: 'white',
-    border: 'none',
-    padding: '10px',
-    cursor: 'pointer',
-    zIndex: 2,
-    fontSize: '24px',
-  },
-  leftArrow: {
-    left: '10px',
-  },
-  rightArrow: {
-    right: '10px',
-  },
+      {/* Các slide hình ảnh */}
+      {images.map((image, index) => (
+        <Box
+          key={index}
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            transition: 'transform 0.5s ease-in-out',
+            transform: `translateX(${(index - currentIndex) * 100}%)`,
+            backgroundImage: `url(${image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            borderRadius: '8px',
+            boxShadow: theme.shadows[5],
+          }}
+        />
+      ))}
+
+      <IconButton
+        onClick={nextSlide}
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          right: '10px',
+          transform: 'translateY(-50%)',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          color: 'white',
+          '&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          },
+        }}
+      >
+       
+      </IconButton>
+    </Box>
+  );
 };
 
 export default ImageSlider;

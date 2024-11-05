@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './FieldDetail.css';
@@ -8,11 +8,16 @@ import { faMapMarkerAlt, faDollarSign, faFutbol, faCar, faClock } from '@fortawe
 
 const FieldDetail = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const field = location.state?.field;
 
     if (!field) {
         return <p>Không tìm thấy thông tin sân.</p>;
     }
+
+    const handleBookClick = () => {
+        navigate(`/user/booking/field/${field.id}/book`, { state: { field } });
+    };
 
     return (
         <div className="field-detail">
@@ -29,7 +34,7 @@ const FieldDetail = () => {
             </div>
 
             {/* Thông tin chi tiết và tiện ích */}
-            <div className="field-info">
+            <div className="field-info1">
                 <div className="field-info-left">
                 <h3>Thông tin</h3>
                     <div className="info-item">
@@ -63,7 +68,7 @@ const FieldDetail = () => {
             {/* Phần chọn đặt sân */}
             <div className="booking-section">
                 <p className="field-price">Giá: {field.price}</p>
-                <button className="booking-button">Đặt sân</button>
+                <button className="booking-button" onClick={handleBookClick}>Đặt sân</button>
             </div>
         </div>
     );

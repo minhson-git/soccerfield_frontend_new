@@ -1,4 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Paper,
+} from '@mui/material';
 
 const FieldList = () => {
   const fields = [
@@ -36,98 +46,56 @@ const FieldList = () => {
   const getTimeSlotStyle = (index) => {
     const colors = ['#FFDDC1', '#FFD1DC', '#C1E1FF', '#D1FFC1', '#FFF2C1', '#C1D1FF'];
     return {
-      ...styles.timeSlot,
       backgroundColor: colors[index % colors.length],
     };
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>Weekly Field Booking Schedule</h2>
-      <div style={styles.currentTime}>Current Time: {currentTime.toLocaleString()}</div>
-      <table style={styles.table}>
-        <thead>
-          <tr>
-            <th>Time Slot</th>
-            <th>Field</th>
-            {daysOfWeek.map((day) => (
-              <th key={day}>{day}</th>
+    <Paper elevation={3} sx={{ padding: 2, borderRadius: 2 }}>
+      <Typography variant="h5" align="center" sx={{ marginBottom: 2 }}>
+        Weekly Field Booking Schedule
+      </Typography>
+      <Typography align="center" sx={{ marginBottom: 2 }}>
+        Current Time: {currentTime.toLocaleString()}
+      </Typography>
+      <TableContainer>
+        <Table sx={{ minWidth: 650 }} aria-label="field booking table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center" sx={{ backgroundColor: '#333', color: '#fff', fontWeight: 'bold' }}>Time Slot</TableCell>
+              <TableCell align="center" sx={{ backgroundColor: '#333', color: '#fff', fontWeight: 'bold' }}>Field</TableCell>
+              {daysOfWeek.map((day) => (
+                <TableCell key={day} align="center" sx={{ backgroundColor: '#333', color: '#fff', fontWeight: 'bold' }}>{day}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {timeSlots.map((slot, index) => (
+              fields.map((field) => (
+                <TableRow key={`${field.id}-${slot}`} hover>
+                  <TableCell align="center" style={getTimeSlotStyle(index)}>{slot}</TableCell>
+                  <TableCell align="center">{field.name} ({field.size})</TableCell>
+                  {daysOfWeek.map((day) => {
+                    const booking = bookings.find(b => b.fieldId === field.id && b.day === day && b.time === slot);
+                    return (
+                      <TableCell key={`${field.id}-${day}-${slot}`} align="center" sx={{
+                        backgroundColor: booking ? '#FFB0B0' : '#C1FFC1',
+                        fontWeight: booking ? 'bold' : 'normal',
+                        color: booking ? 'red' : 'green',
+                        transition: 'background-color 0.3s',
+                      }}>
+                        {booking ? booking.bookedBy : "Available"}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))
             ))}
-          </tr>
-        </thead>
-        <tbody>
-          {timeSlots.map((slot, index) => (
-            fields.map((field) => (
-              <tr key={`${field.id}-${slot}`}>
-                <td style={getTimeSlotStyle(index)}>{slot}</td>
-                <td style={styles.fieldName}>{field.name} ({field.size})</td>
-                {daysOfWeek.map((day) => {
-                  const booking = bookings.find(b => b.fieldId === field.id && b.day === day && b.time === slot);
-                  return (
-                    <td key={`${field.id}-${day}-${slot}`} style={booking ? styles.bookedSlot : styles.availableSlot}>
-                      {booking ? booking.bookedBy : "Available"}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
-};
-
-const styles = {
-  container: {
-    padding: '20px',
-    maxWidth: '1000px',
-    margin: '0 auto',
-    backgroundColor: '#fff',
-    borderRadius: '10px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    fontFamily: "'Roboto', sans-serif",
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: '24px',
-    marginBottom: '10px',
-    color: '#2C3E50',
-  },
-  currentTime: {
-    textAlign: 'center',
-    fontSize: '16px',
-    color: '#333',
-    marginBottom: '20px',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-  },
-  timeSlot: {
-    fontWeight: 'bold',
-    padding: '10px',
-    textAlign: 'center',
-  },
-  fieldName: {
-    fontWeight: 'bold',
-    padding: '10px',
-    textAlign: 'center',
-    backgroundColor: '#e0e0e0',
-  },
-  bookedSlot: {
-    backgroundColor: '#FFC107',
-    padding: '10px',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  availableSlot: {
-    backgroundColor: '#e0e0e0',
-    padding: '10px',
-    textAlign: 'center',
-    color: '#666',
-  },
 };
 
 export default FieldList;

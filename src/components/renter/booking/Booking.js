@@ -3,6 +3,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useNavigate } from 'react-router-dom';
 import './Booking.css';
+
 import bernabeu from '../../../assets/images/bernabeu.jpg';
 import liverpoolBanner from '../../../assets/images/Liverpool-Banner.png';
 import oldTrafford from '../../../assets/images/Old_Trafford_inside_20060726_1.jpg';
@@ -79,7 +80,7 @@ const Booking = () => {
   const navigate = useNavigate();
 
   const handleFieldClick = (field) => {
-    navigate(`/field/${field.id}`, { state: { field } });
+    navigate(`/user/booking/field/${field.id}`, { state: { field } });
   };
 
   const filteredFields = fields.filter(field => {
