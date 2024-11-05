@@ -57,7 +57,7 @@ function ActionButtons(props) {
         <Col>
           <Tooltip title="Delete" placement="bottom">
             <Popconfirm
-              title="Are you sure to delete branch ?"
+              title="Are you sure to delete ?"
               onConfirm={handleDeleteRecord}
               okText="Yes"
               cancelText="Cancel"

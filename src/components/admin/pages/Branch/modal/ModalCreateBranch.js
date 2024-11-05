@@ -61,6 +61,7 @@ function ModalCreateBranch({
         width={500}
         maskClosable={false}
         okButtonProps={{ loading }}
+        forceRender
       >
         <Form form={form} onFinish={onFinish} layout="horizontal">
           <Form.Item

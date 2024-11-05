@@ -1,12 +1,15 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LayoutAdmin from "../admin/layout/Layout";
-import NotFound from "../PageNotFound";
-import Branch from "../admin/pages/Branch/Branch";
-import Login from "../Login";
 import Hero from "../../components/renter/hero/Hero";
-import Spinner from "../admin/global/Spinner";
-import Home from "../../pages/Home";
 import BookingField from "../../pages/BookingField";
+import Home from "../../pages/Home";
+import LayoutAdmin from "../admin/layout/Layout";
+import Field from "../admin/pages/field/Field";
+import Login from "../Login";
+import NotFound from "../PageNotFound";
+import Branch from "../admin/pages/branch/Branch";
+import Booking from "../admin/pages/booking/Booking";
+import User from "../admin/pages/user/user";
+import Role from "../admin/pages/role/role";
 
 const router = createBrowserRouter([
   {
@@ -20,19 +23,19 @@ const router = createBrowserRouter([
       },
       {
         path: "field",
-        element: <h1>Field</h1>,
+        element: <Field />,
       },
       {
         path: "booking",
-        element: <h1>Booking</h1>,
+        element: <Booking />,
       },
       {
         path: "users",
-        element: <h1>User</h1>,
+        element: <User />,
       },
       {
         path: "role",
-        element: <h1>Role</h1>,
+        element: <Role />,
       },
     ],
   },

@@ -9,7 +9,6 @@ const { Title } = Typography;
 
 const LayoutAdmin = () => {
   const [collapsed, setCollapsed] = useState(false);
-
   const { pathname } = useLocation();
   const {
     token: { colorBgContainer },
@@ -47,7 +46,7 @@ const LayoutAdmin = () => {
             justifyContent: "space-between",
           }}
         >
-          <Navigate to="/admin/branch" />
+          {/* <Navigate to="/admin/branch" /> */}
           <div style={{ display: "flex", alignItems: "center" }}>
             <Button
               type="text"
@@ -64,7 +63,7 @@ const LayoutAdmin = () => {
             </Title>
           </div>
         </Header>
-        <Layout style={{ padding: "24px 16px" }}>
+        <Layout style={{ padding: "76px 16px" }}>
           <Outlet />
         </Layout>
       </Layout>

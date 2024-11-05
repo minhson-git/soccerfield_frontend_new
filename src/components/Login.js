@@ -27,7 +27,11 @@ const Login = ({ user, onLogin, onLogout }) => {
         description: res.data.message,
       });
       window.sessionStorage.setItem("access_token", res.data.data.token);
-      navigate("/home");
+      if (res?.data?.data?.role !== "admin") {
+        navigate("/");
+      } else {
+        navigate("/admin/branch");
+      }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
