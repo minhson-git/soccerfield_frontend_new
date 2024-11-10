@@ -46,6 +46,7 @@ function ModalCreateField({
       branch: {
         branchId,
       },
+      status: false,
     };
 
     try {
@@ -59,6 +60,7 @@ function ModalCreateField({
         message: res?.data?.message,
       });
       onCloseModal();
+      fetchFieldList();
       setLoading(false);
     } catch (error) {
       notification.error({ message: res?.data?.message });
@@ -66,7 +68,6 @@ function ModalCreateField({
   };
 
   const onCloseModal = () => {
-    fetchFieldList();
     form.resetFields();
     setIsOpen(false);
     setBranchSelected("");
@@ -140,12 +141,20 @@ function ModalCreateField({
                   controls={false}
                   style={{ width: "100%" }}
                   formatter={(value) =>
-                    value
-                      ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-                      : ""
+                    `${value}`
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                      .replace(/\.(?=\d{0,2}$)/g, ",")
                   }
-                  parser={(value) => value.replace(/(Đ|,|\s)/g, "")}
+                  parser={(value) =>
+                    Number.parseFloat(
+                      value.replace(/\$\s?|(\.*)/g, "").replace(/(\,{1})/g, ".")
+                    ).toFixed(2)
+                  }
                 />
+              </Form.Item>
+
+              <Form.Item name="status" noStyle style={{ display: "none" }}>
+                <Input type="hidden" />
               </Form.Item>
             </>
           ) : (
