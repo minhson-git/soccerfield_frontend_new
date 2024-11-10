@@ -13,7 +13,7 @@ function ActionButtons(props) {
     <Row justify={"space-evenly"}>
       {handleViewModal ? (
         <Col>
-          <Tooltip title="Xem" placement="bottom">
+          <Tooltip title="View" placement="bottom">
             <Button
               className="action-buttons"
               type="default"

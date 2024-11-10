@@ -105,7 +105,7 @@ function Branch() {
       <Row>
         <Col span={12}>
           <Input
-            placeholder="Search branch"
+            placeholder="Search Branch"
             prefix={<SearchOutlined />}
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}

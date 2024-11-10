@@ -17,15 +17,11 @@ function ModalCreateRole({
     const name = values;
     try {
       setLoading(true);
-      const res = await axios.post(
-        `${BaseUrl}/roles`,
-        { name: values.name },
-        {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-          },
-        }
-      );
+      const res = await axios.post(`${BaseUrl}/roles`, name, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      });
       if (res?.data?.statusCode === 201) {
         notification.success({ message: res?.data?.message });
         setLoading(false);

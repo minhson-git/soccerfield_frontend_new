@@ -11,7 +11,7 @@ const BaseUrl = process.env.REACT_APP_BASE_URL;
 function Role() {
   const [searchText, setSearchText] = useState("");
 
-  const [userData, setUserData] = useState([]);
+  const [roleData, setRoleData] = useState([]);
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -31,7 +31,7 @@ function Role() {
           Authorization: `Bearer ${jwtToken}`,
         },
       });
-      setUserData(res?.data?.data);
+      setRoleData(res?.data?.data);
     } catch (error) {}
   };
 
@@ -97,7 +97,7 @@ function Role() {
       <Row>
         <Col span={12}>
           <Input
-            placeholder="Search branch"
+            placeholder="Search Role"
             prefix={<SearchOutlined />}
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
@@ -118,7 +118,7 @@ function Role() {
 
       <Row>
         <Col span={24}>
-          <Table columns={columns} dataSource={userData} />
+          <Table columns={columns} dataSource={roleData} />
         </Col>
       </Row>
 

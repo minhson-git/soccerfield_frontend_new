@@ -3,6 +3,9 @@ import { Col, Input, notification, Row, Table } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ActionButtons from "../../global/ActionButtons";
+import ModalCreateBooking from "./modal/ModalCreateBooking";
+import ModalUpdateBooking from "./modal/ModalUpdateBooking";
+import ViewBookingDrawer from "./modal/ViewBookingDrawer";
 
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -10,30 +13,47 @@ function Booking() {
   const [searchText, setSearchText] = useState("");
 
   const [branchList, setBranchList] = useState([]);
+  const [userList, setUserList] = useState([]);
+
   const [bookingData, setBookingData] = useState([]);
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
-  const [fieldUpdateData, setFieldUpdateData] = useState([]);
+  const [isViewDrawerOpen, setIsViewDrawerOpen] = useState(false);
+  const [bookingViewData, setBookingViewData] = useState([]);
+
+  const [bookingUpdateData, setBookingUpdateData] = useState([]);
 
   const jwtToken = sessionStorage.getItem("access_token");
 
   useEffect(() => {
-    //   fetchBranchList();
+    fetchBranchList();
     fetchBookingList();
+    fetchUserList();
   }, []);
 
-  //   const fetchBranchList = async () => {
-  //     try {
-  //       const res = await axios.get(`${BaseUrl}/branchs`, {
-  //         headers: {
-  //           Authorization: `Bearer ${jwtToken}`,
-  //         },
-  //       });
-  //       setBranchList(res.data.data);
-  //     } catch (error) {}
-  //   };
+  const fetchUserList = async () => {
+    try {
+      const res = await axios.get(`${BaseUrl}/users`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      });
+      setUserList(res?.data?.data);
+    } catch (error) {}
+  };
+
+  const fetchBranchList = async () => {
+    try {
+      const res = await axios.get(`${BaseUrl}/branchs`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      });
+      setBranchList(res.data.data);
+    } catch (error) {}
+  };
 
   const fetchBookingList = async () => {
     try {
@@ -42,15 +62,18 @@ function Booking() {
           Authorization: `Bearer ${jwtToken}`,
         },
       });
-      setBookingData(res?.data?.data);
+      setBookingData(res?.data?.data?.content);
     } catch (error) {}
   };
 
   const handleModal = (modalType, value) => {
     if (modalType === "create" && value) {
+    } else if (modalType === "view" && value) {
+      setIsViewDrawerOpen(true);
+      setBookingViewData(value);
     } else if (modalType === "update" && value) {
       setIsUpdateModalOpen("update");
-      setFieldUpdateData(value);
+      setBookingUpdateData(value);
     }
   };
 
@@ -75,7 +98,7 @@ function Booking() {
   const columns = [
     {
       title: "User Name",
-      dataIndex: ["cccd", "fullname"],
+      dataIndex: ["user", "fullname"],
       key: "fullname",
       align: "center",
       width: "10%",
@@ -83,7 +106,7 @@ function Booking() {
     },
     {
       title: "Phone",
-      dataIndex: ["cccd", "phone"],
+      dataIndex: ["user", "phone"],
       key: "pricePerHour",
       align: "center",
       width: "10%",
@@ -91,7 +114,7 @@ function Booking() {
     },
     {
       title: "Field Type",
-      dataIndex: ["fieldID", "fieldType"],
+      dataIndex: ["field", "fieldType"],
       key: "status",
       align: "center",
       width: "15%",
@@ -99,7 +122,7 @@ function Booking() {
     },
     {
       title: "Branch",
-      dataIndex: ["fieldID", "branch", "branchName"],
+      dataIndex: ["field", "branch", "branchName"],
       key: "branch",
       align: "center",
       width: "15%",
@@ -114,6 +137,7 @@ function Booking() {
         return (
           <ActionButtons
             record={record}
+            handleViewModal={() => handleModal("view", record)}
             handleUpdateModal={() => handleModal("update", record)}
             handleDeleteRecord={() => handleConfirmDeleteField(record.fieldId)}
           />
@@ -126,7 +150,7 @@ function Booking() {
       <Row>
         <Col span={12}>
           <Input
-            placeholder="Search branch"
+            placeholder="Search Booking"
             prefix={<SearchOutlined />}
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
@@ -135,14 +159,15 @@ function Booking() {
           />
         </Col>
         <Col span={12} style={{ textAlign: "right" }}>
-          {/* <ModalCreateField
+          <ModalCreateBooking
             isOpen={isCreateModalOpen}
             setIsOpen={setIsCreateModalOpen}
             branchList={branchList}
-            fetchFieldList={fetchFieldList}
+            userList={userList}
+            fetchBookingList={fetchBookingList}
             BaseUrl={BaseUrl}
             jwtToken={jwtToken}
-          /> */}
+          />
         </Col>
       </Row>
 
@@ -152,14 +177,21 @@ function Booking() {
         </Col>
       </Row>
 
-      {/* <ModalUpdateField
+      <ModalUpdateBooking
         isUpdateModalOpen={isUpdateModalOpen}
         setIsUpdateModalOpen={setIsUpdateModalOpen}
         BaseUrl={BaseUrl}
         jwtToken={jwtToken}
-        fieldUpdateData={fieldUpdateData}
-        fetchFieldList={fetchFieldList} 
-      />*/}
+        bookingUpdateData={bookingUpdateData}
+        fetchBookingList={fetchBookingList}
+      />
+
+      <ViewBookingDrawer
+        isViewDrawerOpen={isViewDrawerOpen}
+        bookingViewData={bookingViewData}
+        setIsViewDrawerOpen={setIsViewDrawerOpen}
+        setBookingViewData={setBookingViewData}
+      />
     </>
   );
 }

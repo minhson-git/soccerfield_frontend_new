@@ -25,7 +25,7 @@ function ModalUpdateRole({
     try {
       setLoading(true);
       const res = await axios.put(
-        `${BaseUrl}/users/${roleUpdateData.id}`,
+        `${BaseUrl}/roles/${roleUpdateData.id}`,
         { name: values.name },
         {
           headers: {

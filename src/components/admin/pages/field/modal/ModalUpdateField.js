@@ -1,4 +1,12 @@
-import { Button, Form, Input, Modal, notification, Select } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  notification,
+  Select,
+} from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -19,17 +27,18 @@ function ModalUpdateField({
       branchId: fieldUpdateData?.branch?.branchName,
       fieldType: fieldUpdateData?.fieldType,
       pricePerHour: fieldUpdateData?.pricePerHour,
+      status: fieldUpdateData.status ? "Booked" : "Available",
     });
   }, [fieldUpdateData]);
 
   const onFinish = async (values) => {
-    const { fieldType, pricePerHour } = values;
+    const { fieldType, pricePerHour, status } = values;
 
     const data = {
       fieldType,
       pricePerHour,
+      status: status === "booked" ? true : false,
     };
-
     try {
       setLoading(true);
       const res = await axios.put(
@@ -50,6 +59,11 @@ function ModalUpdateField({
       notification.error({ message: res?.data?.message });
     }
   };
+
+  const statusOptions = [
+    { value: "booked", lable: "Booked" },
+    { value: "available", label: "Available" },
+  ];
 
   const onCloseModal = () => {
     fetchFieldList();
@@ -110,7 +124,35 @@ function ModalUpdateField({
               },
             ]}
           >
-            <Input placeholder="20000" allowClear />
+            <InputNumber
+              allowClear
+              placeholder="20000"
+              controls={false}
+              style={{ width: "100%" }}
+              formatter={(value) =>
+                `${value}`
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                  .replace(/\.(?=\d{0,2}$)/g, ",")
+              }
+              parser={(value) =>
+                Number.parseFloat(
+                  value.replace(/\$\s?|(\.*)/g, "").replace(/(\,{1})/g, ".")
+                ).toFixed(2)
+              }
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Status"
+            name="status"
+            rules={[
+              {
+                required: true,
+                message: "Please choose status",
+              },
+            ]}
+          >
+            <Select options={statusOptions} />
           </Form.Item>
         </Form>
       </Modal>

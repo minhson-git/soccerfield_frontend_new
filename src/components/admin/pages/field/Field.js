@@ -33,6 +33,7 @@ function Field() {
           Authorization: `Bearer ${jwtToken}`,
         },
       });
+
       setBranchList(res.data.data);
     } catch (error) {}
   };
@@ -44,7 +45,7 @@ function Field() {
           Authorization: `Bearer ${jwtToken}`,
         },
       });
-      setFieldData(res?.data?.data);
+      setFieldData(res?.data?.data?.content);
     } catch (error) {}
   };
 
@@ -102,6 +103,9 @@ function Field() {
       align: "center",
       width: "10%",
       ellipsis: true,
+      render: (status) => {
+        return status === true || status === "true" ? "Booked" : "Available";
+      },
     },
     {
       title: "Branch",
@@ -132,7 +136,7 @@ function Field() {
       <Row>
         <Col span={12}>
           <Input
-            placeholder="Search branch"
+            placeholder="Search Field"
             prefix={<SearchOutlined />}
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
