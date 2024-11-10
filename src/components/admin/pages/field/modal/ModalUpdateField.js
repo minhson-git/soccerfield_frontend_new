@@ -37,7 +37,7 @@ function ModalUpdateField({
     const data = {
       fieldType,
       pricePerHour,
-      status: status === "booked" ? true : false,
+      status: status === "available" ? false : true,
     };
     try {
       setLoading(true);

@@ -106,6 +106,7 @@ function ModalCreateField({
               allowClear
               options={branchOptions}
               onChange={(value) => setBranchSelected(value)}
+              placeholder="Select branch"
             />
           </Form.Item>
 
@@ -121,7 +122,7 @@ function ModalCreateField({
                   },
                 ]}
               >
-                <Input allowClear />
+                <Input allowClear placeholder="Enter new field type" />
               </Form.Item>
 
               <Form.Item
@@ -137,7 +138,7 @@ function ModalCreateField({
               >
                 <InputNumber
                   allowClear
-                  placeholder="20000"
+                  placeholder="Enter price"
                   controls={false}
                   style={{ width: "100%" }}
                   formatter={(value) =>

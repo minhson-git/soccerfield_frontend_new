@@ -94,7 +94,7 @@ function Booking() {
       notification.error({ message: "Fail to delete field" });
     }
   };
-
+  console.log(bookingData);
   const columns = [
     {
       title: "User Name",
@@ -117,7 +117,7 @@ function Booking() {
       dataIndex: ["field", "fieldType"],
       key: "status",
       align: "center",
-      width: "15%",
+      width: "10%",
       ellipsis: true,
     },
     {
@@ -129,9 +129,20 @@ function Booking() {
       ellipsis: true,
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      align: "center",
+      width: "10%",
+      ellipsis: true,
+      render: (status) => {
+        return status === true || status === "true" ? "Completed" : "Booked";
+      },
+    },
+    {
       title: "Actions",
       key: "action",
-      width: "20%",
+      width: "10%",
       align: "center",
       render: (_, record) => {
         return (

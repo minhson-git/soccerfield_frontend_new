@@ -87,7 +87,7 @@ function ModalCreateBooking({
   };
 
   const onFinish = async (values) => {
-    const { userId, fieldId, time, day, status } = values;
+    const { userId, fieldId, time, day } = values;
 
     const [startTime, endTime] = time.split("-");
 
@@ -109,7 +109,7 @@ function ModalCreateBooking({
       startTime: formatStartTime,
       endTime: formatEndTime,
       bookingDate: formatDay,
-      status,
+      status: false,
     };
 
     try {
@@ -306,21 +306,9 @@ function ModalCreateBooking({
               <Form.Item
                 label="Status"
                 name="status"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please choose status",
-                  },
-                ]}
+                style={{ display: "none" }}
               >
-                <Select
-                  allowClear
-                  placeholder="Select status"
-                  options={[
-                    { value: false, label: "Booked" },
-                    { value: true, label: "Complated" },
-                  ]}
-                />
+                <Select />
               </Form.Item>
             </>
           ) : (

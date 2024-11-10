@@ -85,7 +85,7 @@ function ModalUpdateBooking({
           : null,
         timeFrame: selectedTimeFrame,
         time: selectedTimeLabel,
-        status: bookingUpdateData?.status === true ? "Booked" : "Completed",
+        status: bookingUpdateData?.status === true ? "Completed" : "Booked",
       });
     }
   }, [bookingUpdateData, form]);
@@ -157,7 +157,7 @@ function ModalUpdateBooking({
       field: {
         fieldId: fieldId,
       },
-      status: status === "booked" ? true : false,
+      status: status === "booked" ? false : true,
     };
 
     try {

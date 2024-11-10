@@ -133,7 +133,7 @@ function ViewBookingDrawer(props) {
       </Paragraph>
       <Paragraph>
         <Text strong>Status: </Text>
-        <Text>{bookingViewData?.status === true ? "Booked" : "Completed"}</Text>
+        <Text>{bookingViewData?.status === true ? "Completed" : "Booked"}</Text>
       </Paragraph>
     </Drawer>
   );

@@ -74,7 +74,7 @@ function ModalCreateBranch({
               },
             ]}
           >
-            <Input allowClear />
+            <Input allowClear placeholder="Enter new branch name" />
           </Form.Item>
 
           <Form.Item
@@ -87,7 +87,7 @@ function ModalCreateBranch({
               },
             ]}
           >
-            <Input allowClear />
+            <Input allowClear placeholder="Enter new address" />
           </Form.Item>
 
           <Form.Item
