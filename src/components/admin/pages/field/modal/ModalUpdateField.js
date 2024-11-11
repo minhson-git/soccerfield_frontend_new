@@ -27,9 +27,14 @@ function ModalUpdateField({
       branchId: fieldUpdateData?.branch?.branchName,
       fieldType: fieldUpdateData?.fieldType,
       pricePerHour: fieldUpdateData?.pricePerHour,
-      status: fieldUpdateData.status ? "Booked" : "Available",
+      status:
+        fieldUpdateData.status === true || fieldUpdateData.status === "true"
+          ? "Booked"
+          : "Available",
     });
   }, [fieldUpdateData]);
+
+  console.log(fieldUpdateData);
 
   const onFinish = async (values) => {
     const { fieldType, pricePerHour, status } = values;
@@ -56,13 +61,13 @@ function ModalUpdateField({
       onCloseModal();
       setLoading(false);
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       notification.error({ message: error?.response?.data?.message });
     }
   };
 
   const statusOptions = [
-    { value: "booked", lable: "Booked" },
+    { value: "booked", label: "Booked" },
     { value: "available", label: "Available" },
   ];
 

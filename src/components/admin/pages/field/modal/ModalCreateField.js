@@ -63,8 +63,8 @@ function ModalCreateField({
       fetchFieldList();
       setLoading(false);
     } catch (error) {
-      notification.error({ message: res?.data?.message });
-    setLoading(false)
+      setLoading(false);
+      notification.error({ message: error?.response?.data?.message });
     }
   };
 
