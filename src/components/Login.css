@@ -1,11 +1,17 @@
+.div {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+}
+
 .container {
   padding: 40px;
-  max-width: 400px !important;
+  width: 400px;
   margin: 160px auto;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   text-align: center;
 }
 
@@ -13,7 +19,7 @@
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #2C3E50;
+  color: #2c3e50;
 }
 
 .text {
@@ -43,7 +49,7 @@
 }
 
 .input:focus {
-  border-color: #007BFF;
+  border-color: #007bff;
   outline: none;
 }
 
@@ -67,7 +73,7 @@
 /* Styles for Sign Up Button */
 .signupButton {
   width: 100%;
-  padding: 7px ;
+  padding: 7px;
   background: #ff7f50;
   color: white;
   border: none;

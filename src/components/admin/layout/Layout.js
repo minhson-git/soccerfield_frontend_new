@@ -37,7 +37,12 @@ const LayoutAdmin = () => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar collapsed={collapsed} />
-      <Layout style={{ marginLeft: collapsed ? 0 : 0, height: "100vh" }}>
+      <Layout
+        style={{
+          marginLeft: collapsed ? 0 : 0,
+          height: "100vh",
+        }}
+      >
         <Header
           style={{
             padding: 0,
@@ -49,7 +54,12 @@ const LayoutAdmin = () => {
           }}
         >
           {/* <Navigate to="/admin/branch" /> */}
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}

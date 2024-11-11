@@ -58,6 +58,7 @@ const Login = ({ user, onLogin, onLogout }) => {
       {isLoading ? (
         <Spinner />
       ) : (
+        // <div className="div">
         <div className="container">
           <h2 className="title">User Account</h2>
           {user ? (
@@ -121,6 +122,7 @@ const Login = ({ user, onLogin, onLogout }) => {
             </div>
           )}
         </div>
+        // </div>
       )}
     </>
   );

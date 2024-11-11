@@ -1,25 +1,21 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import FieldDetail from "../../components/renter/booking/FieldDetail";
 import Hero from "../../components/renter/hero/Hero";
+import HistoryBooking from "../../components/renter/historybooking/History";
 import BookingField from "../../pages/BookingField";
-import Home from "../../pages/Home";
 import LayoutAdmin from "../admin/layout/Layout";
-import Field from "../admin/pages/field/Field";
-import Login from "../Login";
-import NotFound from "../PageNotFound";
-import Branch from "../admin/pages/Branch/Branch";
 import Booking from "../admin/pages/booking/Booking";
-import User from "../admin/pages/user/user";
+import Branch from "../admin/pages/branch/Branch";
+import Field from "../admin/pages/field/Field";
 import Role from "../admin/pages/role/role";
+import User from "../admin/pages/user/user";
 import Signup from "../branch_manager/Signup";
 import Login from "../Login";
-import Hero from "../../components/renter/hero/Hero";
-import BookingField from "../../pages/BookingField";
-import HistoryBooking from "../../components/renter/historybooking/History";
-import FieldDetail from "../../components/renter/booking/FieldDetail";
-import Header from "../renter/header/Header"; // Điều chỉnh đường dẫn theo cấu trúc của bạn
-import Footer from "../renter/footer/Footer";
-import Profile from "../renter/profile/Profile";
+import NotFound from "../PageNotFound";
 import BookingForm from "../renter/booking_form/BookingForm";
+import Footer from "../renter/footer/Footer";
+import Header from "../renter/header/Header"; // Điều chỉnh đường dẫn theo cấu trúc của bạn
+import Profile from "../renter/profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -100,16 +96,6 @@ const router = createBrowserRouter([
     ),
   },
 
-  {
-    path: "/home",
-    element: <Home />,
-    children: [
-      {
-        path: "/home/bookingfield",
-        element: <BookingField />,
-      },
-    ],
-  },
   {
     path: "/",
     element: <Hero />,

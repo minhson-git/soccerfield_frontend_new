@@ -255,7 +255,7 @@ function Field() {
               <Flex justify="flex-end">
                 <Pagination
                   size="small"
-                  pageSizeOptions={[5, 10, 20, 30, 40, 50]}
+                  pageSizeOptions={[10, 20, 30, 40, 50]}
                   locale={{ items_per_page: "/ page" }}
                   current={meta.current + 1}
                   pageSize={meta.pageSize}
