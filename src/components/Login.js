@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Form } from "antd";
 import "./Login.css"; // Import file CSS
 import axios from "axios";
-import { notification } from "antd";
+import { Input, notification } from "antd";
 import Spinner from "./admin/global/Spinner";
 
 const Login = ({ user, onLogin, onLogout }) => {
@@ -67,21 +68,39 @@ const Login = ({ user, onLogin, onLogout }) => {
             <div className="formContainer">
               <p className="text">Please log in to access your account</p>
               <div className="inputGroup">
-                <input
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="input"
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="input"
-                  onKeyDown={handleKeyDown}
-                />
+                <Form  >
+                  <Form.Item
+                    style={{ fontSize: "16px" }}
+                    label="User Name"
+                    name="username"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter user name",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="User Name" size="medium" onChange={(e) => setUsername(e.target.value)}/>
+                  </Form.Item>
+                  <Form.Item
+                    style={{ fontSize: "16px" }}
+                    label="Password"
+                    name="password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter password",
+                      },
+                    ]}
+                  >
+                    <Input.Password
+                      placeholder="Password"
+                      size="medium"
+                      onChange={(e) => setPassword(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                    />
+                  </Form.Item>
+                </Form>
                 <button className="loginButton" onClick={handleLogin}>
                   Log In
                 </button>

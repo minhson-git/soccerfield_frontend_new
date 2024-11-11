@@ -3,13 +3,14 @@ import Hero from "../../components/renter/hero/Hero";
 import BookingField from "../../pages/BookingField";
 import Home from "../../pages/Home";
 import LayoutAdmin from "../admin/layout/Layout";
-import Field from "../admin/pages/field/Field";
+import Field from "../admin/pages/Field/Field";
 import Login from "../Login";
 import NotFound from "../PageNotFound";
-import Branch from "../admin/pages/branch/Branch";
+import Branch from "../admin/pages/Branch/Branch";
 import Booking from "../admin/pages/booking/Booking";
 import User from "../admin/pages/user/user";
 import Role from "../admin/pages/role/role";
+import Signup from "../branch_manager/Signup";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
   },
   {
     path: "*",

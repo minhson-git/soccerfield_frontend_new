@@ -17,7 +17,7 @@
 }
 
 .text {
-  font-size: 1rem;
+  font-size: 16px;
   margin-bottom: 20px;
   color: #333;
 }
@@ -29,8 +29,6 @@
 .inputGroup {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 15px;
 }
 
 .input {
@@ -52,7 +50,7 @@
 /* Gradient button for Log In */
 .loginButton {
   width: 100%;
-  padding: 12px 30px;
+  padding: 7px;
   background: linear-gradient(90deg, #6a11cb, #2575fc);
   color: white;
   border: none;
@@ -69,7 +67,7 @@
 /* Styles for Sign Up Button */
 .signupButton {
   width: 100%;
-  padding: 12px 30px;
+  padding: 7px ;
   background: #ff7f50;
   color: white;
   border: none;
