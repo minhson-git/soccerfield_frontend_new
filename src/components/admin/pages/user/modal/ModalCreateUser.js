@@ -31,7 +31,8 @@ function ModalCreateUser({
         onCloseModal();
       }
     } catch (error) {
-      notification.error({ message: res?.data?.message });
+      setLoading(false)
+      notification.error({ message: error?.response?.data?.message });
     }
   };
 

@@ -64,6 +64,7 @@ function ModalCreateField({
       setLoading(false);
     } catch (error) {
       notification.error({ message: res?.data?.message });
+    setLoading(false)
     }
   };
 

@@ -46,7 +46,8 @@ function ModalUpdateUser({
       setLoading(false);
       setIsUpdateModalOpen(false);
     } catch (error) {
-      notification.error({ message: res?.data?.message });
+      setLoading(false)
+      notification.error({ message: error?.response?.data?.message });
     }
   };
 

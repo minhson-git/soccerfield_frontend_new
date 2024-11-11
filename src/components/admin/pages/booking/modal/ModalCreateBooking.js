@@ -125,7 +125,7 @@ function ModalCreateBooking({
       onCloseModal();
       setLoading(false);
     } catch (error) {
-      notification.error({ message: error?.response?.data?.message });
+      notification.error({ message: "Field has been booking" });
       setLoading(false)
     }
   };

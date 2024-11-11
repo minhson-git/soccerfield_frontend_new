@@ -133,7 +133,7 @@ function Field() {
       ellipsis: true,
     },
     {
-      title: "Price Per House",
+      title: "Price",
       dataIndex: "pricePerHour",
       key: "pricePerHour",
       align: "center",

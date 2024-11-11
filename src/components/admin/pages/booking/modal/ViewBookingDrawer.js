@@ -97,14 +97,14 @@ function ViewBookingDrawer(props) {
       </Paragraph>
       <Paragraph>
         <Text strong>Email: </Text>
-        <Text>{bookingViewData?.user?.phone}</Text>
+        <Text>{bookingViewData?.user?.email}</Text>
       </Paragraph>
       <Paragraph>
         <Text strong>Field Type: </Text>
         <Text>{bookingViewData?.field?.fieldType}</Text>
       </Paragraph>
       <Paragraph>
-        <Text strong>Price Per Hour: </Text>
+        <Text strong>Price: </Text>
         <Text>{formatCurrency(bookingViewData?.field?.pricePerHour)}</Text>
       </Paragraph>
       <Paragraph>
