@@ -5,34 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import './Booking.css';
 import axios from 'axios';
 import { notification } from 'antd';
+import { getUniqueImage } from '../../utils/imageSelector';
 
-// Dữ liệu sân yêu thích (Giữ nguyên)
-const favoriteFields = [
-  {
-    id: 1,
-    name: 'Sân A',
-    address: '123 Đường A, Quận 1',
-    type: 'Sân 5 người',
-    image: require('../../../assets/images/bernabeu.jpg')
-  },
-  {
-    id: 5,
-    name: 'Sân E',
-    address: '102 Đường E, Quận 5',
-    type: 'Sân 5 người',
-    image: require('../../../assets/images/signal.jpg')
-  },
-];
-
-const BaseUrl = process.env.REACT_APP_BASE_URL; // URL backend của bạn
+const BaseUrl = process.env.REACT_APP_BASE_URL;
 
 const Booking = () => {
-  const [fields, setFields] = useState([]); // Dữ liệu sân
+  const [fields, setFields] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState('All');
   const [selectedType, setSelectedType] = useState('All');
-  const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
-  const [uniqueBranches, setUniqueBranches] = useState([]); // Danh sách chi nhánh duy nhất
-  const [uniqueFieldTypes, setUniqueFieldTypes] = useState([]); // Danh sách loại sân duy nhất
+  const [isLoading, setIsLoading] = useState(true);
+  const [uniqueBranches, setUniqueBranches] = useState([]);
+  const [uniqueFieldTypes, setUniqueFieldTypes] = useState([]);
 
   const jwtToken = sessionStorage.getItem("access_token");
   const navigate = useNavigate();
@@ -64,7 +47,6 @@ const Booking = () => {
     navigate(`/user/booking/field/${field.fieldId}`, { state: { field } });
   };
 
-  // Lọc danh sách sân dựa trên chi nhánh và loại sân được chọn
   const filteredFields = fields.filter(field => {
     return (
       (selectedBranch === 'All' || field.branch.branchName === selectedBranch) &&
@@ -80,7 +62,6 @@ const Booking = () => {
     <div className="booking-page">
       <div className="booking-content">
         <div className="fields-container">
-         
           <div className="filter-section">
             <label>
               Branch: 
@@ -102,7 +83,6 @@ const Booking = () => {
             </label>
           </div>
 
-          {/* Phần danh sách sân */}
           <div className="fields-section">
             {filteredFields.map(field => (
               <div key={field.fieldId} className="field-card" onClick={() => handleFieldClick(field)}>
@@ -117,32 +97,10 @@ const Booking = () => {
           </div>
         </div>
 
-        {/* Phần favorite slider nằm bên phải */}
-        <div className="favorite-slider">
-          <h2>Sân được yêu thích</h2>
-          <Carousel
-            showThumbs={false}
-            showStatus={false}
-            infiniteLoop
-            autoPlay
-            interval={3000}
-            emulateTouch
-          >
-            {favoriteFields.map(favorite => (
-              <div key={favorite.id} className="favorite-card">
-                <img src={favorite.image} alt={favorite.name} className="favorite-image" />
-                <div className="favorite-info">
-                  <h4>{favorite.name}</h4>
-                  <p>{favorite.address}</p>
-                  <p>{favorite.type}</p>
-                </div>
-              </div>
-            ))}
-          </Carousel>
-        </div>
+      
       </div>
     </div>
   );
-}
+};
 
 export default Booking;

@@ -8,13 +8,14 @@ const BaseUrl = process.env.REACT_APP_BASE_URL;
 function History() {
   const [bookingHistory, setBookingHistory] = useState([]);
   const jwtToken = sessionStorage.getItem("access_token");
-  const userId = sessionStorage.getItem("userId"); 
+  const userId = sessionStorage.getItem("userId");
 
   useEffect(() => {
+    if (userId) {
       fetchBookingHistory(userId);
+    }
   }, [userId]);
 
-  // Hàm lấy lịch sử booking của user
   const fetchBookingHistory = async (userId) => {
     if (!userId) return;
 
@@ -27,8 +28,18 @@ function History() {
       });
       console.log("Response data:", res?.data);
 
-     
-      setBookingHistory(res?.data?.data?.content || []);
+      const updatedBookingHistory = res?.data?.data?.content?.map((booking) => {
+        const currentTime = new Date();
+        const startTime = new Date(booking.startTime);
+        const endTime = new Date(booking.endTime);
+
+        if (currentTime > endTime) {
+          booking.status = true;  
+        }
+        return booking;
+      });
+
+      setBookingHistory(updatedBookingHistory || []);
     } catch (error) {
       console.error("Error fetching booking history:", error);
       notification.error({ message: "Failed to fetch booking history" });
@@ -96,21 +107,21 @@ function History() {
       dataIndex: "status",
       key: "status",
       align: "center",
-      render: (status) => (status ? "Confirmed" : "Pending"),
+      render: (status) => (status ? "Completed" : "Booked"),
       width: "15%",
     },
   ];
 
   return (
-    <div className = "history-container">
+    <div className="history-container">
       <h2 className="table-title">Booking History</h2>
-    <div className="table-container">
-      <Table
-        columns={columns}
-        dataSource={Array.isArray(bookingHistory) ? bookingHistory : []}
-        rowKey="bookingId"
-      />
-    </div>
+      <div className="table-container">
+        <Table
+          columns={columns}
+          dataSource={Array.isArray(bookingHistory) ? bookingHistory : []}
+          rowKey="bookingId"
+        />
+      </div>
     </div>
   );
 }
