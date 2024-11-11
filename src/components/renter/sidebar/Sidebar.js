@@ -27,28 +27,28 @@ const Sidebar = ({ isSidebarClosed, toggleSidebar }) => {
         <div className="menu">
           <ul className="menu-links">
             <li className="nav-link">
-              <a href="#">
+              <a href="/user/home">
                 <i className="bx bx-home-alt icon"></i>
-                <span className="text nav-text">Dashboard</span>
+                <span className="text nav-text">Home</span>
               </a>
+            </li>
+            <li className="nav-link">
+              <a href="/user/profile">
+                <i className="bx bx-user icon"></i>
+                <span className="text nav-text">Profile</span>
+              </a>
+            </li>
+            <li className="nav-link">
+              <Link to="/user/history">
+                <i className="bx bx-time icon"></i>
+                <span className="text nav-text">History</span>
+              </Link>
             </li>
             <li className="nav-link">
               <a href="#">
                 <i className="bx bx-bell icon"></i>
                 <span className="text nav-text">Notifications</span>
               </a>
-            </li>
-            <li className="nav-link">
-              <a href="#">
-                <i className="bx bx-heart icon"></i>
-                <span className="text nav-text">Favourites</span>
-              </a>
-            </li>
-            <li className="nav-link">
-              <Link to="/history">
-                <i className="bx bx-time icon"></i>
-                <span className="text nav-text">History</span>
-              </Link>
             </li>
           </ul>
         </div>

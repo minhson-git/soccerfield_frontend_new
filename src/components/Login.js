@@ -28,8 +28,11 @@ const Login = ({ user, onLogin, onLogout }) => {
         description: res.data.message,
       });
       window.sessionStorage.setItem("access_token", res.data.data.token);
+      window.sessionStorage.setItem("username", username);
+      window.sessionStorage.setItem("userId", res.data.data.userId); // Lưu userId vào sessionStorage
+
       if (res?.data?.data?.role !== "admin") {
-        navigate("/");
+        navigate("/user/home");
       } else {
         navigate("/admin/branch");
       }
@@ -68,7 +71,7 @@ const Login = ({ user, onLogin, onLogout }) => {
             <div className="formContainer">
               <p className="text">Please log in to access your account</p>
               <div className="inputGroup">
-                <Form  >
+                <Form>
                   <Form.Item
                     style={{ fontSize: "16px" }}
                     label="User Name"
@@ -80,7 +83,11 @@ const Login = ({ user, onLogin, onLogout }) => {
                       },
                     ]}
                   >
-                    <Input placeholder="User Name" size="medium" onChange={(e) => setUsername(e.target.value)}/>
+                    <Input
+                      placeholder="User Name"
+                      size="medium"
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
                   </Form.Item>
                   <Form.Item
                     style={{ fontSize: "16px" }}
