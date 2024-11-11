@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Layout, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../assets/images/hero/logo.png";
 
 const { Sider } = Layout;
 

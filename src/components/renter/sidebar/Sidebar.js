@@ -27,7 +27,7 @@ const Sidebar = ({ isSidebarClosed, toggleSidebar }) => {
         <div className="menu">
           <ul className="menu-links">
             <li className="nav-link">
-              <a href="/user">
+              <a href="/user/home">
                 <i className="bx bx-home-alt icon"></i>
                 <span className="text nav-text">Home</span>
               </a>

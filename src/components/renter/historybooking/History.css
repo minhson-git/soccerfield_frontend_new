@@ -1,4 +1,10 @@
-
+.history-container{
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  min-height: 100vh;
+  flex-direction: column;
+}
 .history {
   flex: 1; 
   padding: 100px;

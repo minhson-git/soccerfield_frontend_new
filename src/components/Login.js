@@ -31,7 +31,7 @@ const Login = ({ user, onLogin, onLogout }) => {
       window.sessionStorage.setItem("userId", res.data.data.userId); // Lưu userId vào sessionStorage
   
       if (res?.data?.data?.role !== "admin") {
-        navigate("/user/booking");
+        navigate("/user/home");
       } else {
         navigate("/admin/branch");
       }

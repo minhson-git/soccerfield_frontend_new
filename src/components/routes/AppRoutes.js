@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   },
   // -----User-----
   {
-    path: "/user/booking",
+    path: "/user/home",
     index: true,
     element: (
       <>
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/user/booking/field/:id",
+    path: "/user/booking/field/:fieldId",
     element: (
       <>
         <Header />

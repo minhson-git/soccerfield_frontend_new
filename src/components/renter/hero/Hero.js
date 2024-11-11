@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import heroImage from '../../../assets/images/pexels-photo-399187.jpeg';
+import heroImage from '../../../assets/images/hero/pexels-photo-399187.jpeg';
 import NavBar from './NavBar';
 import Footer from '../footer/Footer';
 import './Hero.css';

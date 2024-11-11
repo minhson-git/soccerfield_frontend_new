@@ -28,8 +28,8 @@ const BaseUrl = process.env.REACT_APP_BASE_URL; // URL backend của bạn
 
 const Booking = () => {
   const [fields, setFields] = useState([]); // Dữ liệu sân
-  const [selectedBranch, setSelectedBranch] = useState('Tất cả');
-  const [selectedType, setSelectedType] = useState('Tất cả');
+  const [selectedBranch, setSelectedBranch] = useState('All');
+  const [selectedType, setSelectedType] = useState('All');
   const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
   const [uniqueBranches, setUniqueBranches] = useState([]); // Danh sách chi nhánh duy nhất
   const [uniqueFieldTypes, setUniqueFieldTypes] = useState([]); // Danh sách loại sân duy nhất
@@ -67,8 +67,8 @@ const Booking = () => {
   // Lọc danh sách sân dựa trên chi nhánh và loại sân được chọn
   const filteredFields = fields.filter(field => {
     return (
-      (selectedBranch === 'Tất cả' || field.branch.branchName === selectedBranch) &&
-      (selectedType === 'Tất cả' || field.fieldType === selectedType)
+      (selectedBranch === 'All' || field.branch.branchName === selectedBranch) &&
+      (selectedType === 'All' || field.fieldType === selectedType)
     );
   });
 
@@ -80,21 +80,21 @@ const Booking = () => {
     <div className="booking-page">
       <div className="booking-content">
         <div className="fields-container">
-          {/* Phần bộ lọc */}
+         
           <div className="filter-section">
             <label>
-              Chi nhánh:
+              Branch: 
               <select value={selectedBranch} onChange={(e) => setSelectedBranch(e.target.value)}>
-                <option value="Tất cả">Tất cả</option>
+                <option value="All">All</option>
                 {uniqueBranches.map((branch, index) => (
                   <option key={index} value={branch}>{branch}</option>
                 ))}
               </select>
             </label>
             <label>
-              Loại sân:
+              Field Type:
               <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
-                <option value="Tất cả">Tất cả</option>
+                <option value="All">All</option>
                 {uniqueFieldTypes.map((type, index) => (
                   <option key={index} value={type}>{type}</option>
                 ))}
@@ -108,9 +108,9 @@ const Booking = () => {
               <div key={field.fieldId} className="field-card" onClick={() => handleFieldClick(field)}>
                 <div className="field-info">
                   <h3>{field.fieldType}</h3>
-                  <p>Chi nhánh: {field.branch.branchName}</p>
-                  <p>Địa chỉ: {field.branch.address}</p>
-                  <p>Giá: {field.pricePerHour.toLocaleString()} VND/giờ</p>
+                  <p>Branch: {field.branch.branchName}</p>
+                  <p>Address: {field.branch.address}</p>
+                  <p>Price: {field.pricePerHour.toLocaleString()} VND/hour</p>
                 </div>
               </div>
             ))}

@@ -102,13 +102,15 @@ function History() {
   ];
 
   return (
-    <div className="table-container">
+    <div className = "history-container">
       <h2 className="table-title">Booking History</h2>
+    <div className="table-container">
       <Table
         columns={columns}
         dataSource={Array.isArray(bookingHistory) ? bookingHistory : []}
         rowKey="bookingId"
       />
+    </div>
     </div>
   );
 }
