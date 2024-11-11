@@ -125,7 +125,8 @@ function ModalCreateBooking({
       onCloseModal();
       setLoading(false);
     } catch (error) {
-      notification.error({ message: res?.data?.message });
+      notification.error({ message: error?.response?.data?.message });
+      setLoading(false)
     }
   };
 

@@ -130,7 +130,7 @@ function Booking() {
 
   const handleConfirmDeleteField = async (id) => {
     try {
-      const res = await axios.delete(`${BaseUrl}/fields/${id}`, {
+      const res = await axios.delete(`${BaseUrl}/bookings/${id}`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
@@ -139,10 +139,10 @@ function Booking() {
         notification.success({
           message: res?.data?.message,
         });
-        fetchFieldList();
+        fetchBookingList();
       }
     } catch (error) {
-      notification.error({ message: "Fail to delete field" });
+      notification.error({ message: error?.response?.data?.message });
     }
   };
 
@@ -206,7 +206,7 @@ function Booking() {
             record={record}
             handleViewModal={() => handleModal("view", record)}
             handleUpdateModal={() => handleModal("update", record)}
-            handleDeleteRecord={() => handleConfirmDeleteField(record.fieldId)}
+            handleDeleteRecord={() => handleConfirmDeleteField(record.bookingId)}
           />
         );
       },
