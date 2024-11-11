@@ -34,7 +34,7 @@ const Login = ({ user, onLogin, onLogout }) => {
       if (res?.data?.data?.role !== "admin") {
         navigate("/user/home");
       } else {
-        navigate("/admin/branch");
+        navigate("/admin/branchs");
       }
       setIsLoading(false);
     } catch (error) {
