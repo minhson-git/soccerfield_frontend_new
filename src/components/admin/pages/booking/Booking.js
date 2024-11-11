@@ -1,11 +1,22 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { Col, Input, notification, Row, Table } from "antd";
+import {
+  Col,
+  Flex,
+  Input,
+  notification,
+  Pagination,
+  Row,
+  Select,
+  Table,
+} from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ActionButtons from "../../global/ActionButtons";
 import ModalCreateBooking from "./modal/ModalCreateBooking";
 import ModalUpdateBooking from "./modal/ModalUpdateBooking";
 import ViewBookingDrawer from "./modal/ViewBookingDrawer";
+import SearchInput from "../../global/SearchInput";
+import SearchButton from "../../global/SearchButton";
 
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -24,6 +35,24 @@ function Booking() {
   const [bookingViewData, setBookingViewData] = useState([]);
 
   const [bookingUpdateData, setBookingUpdateData] = useState([]);
+
+  const [branchName, setBranchName] = useState("");
+  const [username, setUsername] = useState("");
+  const [status, setStatus] = useState(null);
+
+  const [meta, setMeta] = useState({
+    current: 0,
+    pageSize: 10,
+    pages: 0,
+    total: 0,
+  });
+
+  const branchOptions = branchList?.map((branch) => {
+    return {
+      value: branch.id,
+      label: branch.branchName,
+    };
+  });
 
   const jwtToken = sessionStorage.getItem("access_token");
 
@@ -55,17 +84,39 @@ function Booking() {
     } catch (error) {}
   };
 
-  const fetchBookingList = async () => {
+  const fetchBookingList = async (
+    page = meta.current,
+    size = meta.pageSize,
+    branchName = "",
+    username = "",
+    status = null
+  ) => {
+    const params = {
+      size,
+      page,
+      ...(branchName && { branchName }),
+      ...(username && { username }),
+      ...(status !== null && { status }),
+    };
+
     try {
       const res = await axios.get(`${BaseUrl}/bookings`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
+        params,
       });
+
       setBookingData(res?.data?.data?.content);
+
+      setMeta({
+        current: res?.data?.data?.pageable?.pageNumber,
+        pageSize: res?.data?.data?.pageable?.pageSize,
+        pages: res?.data?.data?.totalPages,
+        total: res?.data?.data?.totalElements,
+      });
     } catch (error) {}
   };
-
   const handleModal = (modalType, value) => {
     if (modalType === "create" && value) {
     } else if (modalType === "view" && value) {
@@ -94,12 +145,17 @@ function Booking() {
       notification.error({ message: "Fail to delete field" });
     }
   };
-  console.log(bookingData);
+
+  const handleChangePage = (page, pageSize) => {
+    setMeta({ ...meta, current: page - 1, pageSize });
+    fetchBookingList(page - 1, pageSize, branchName, username, status);
+  };
+
   const columns = [
     {
       title: "User Name",
-      dataIndex: ["user", "fullname"],
-      key: "fullname",
+      dataIndex: ["user", "username"],
+      key: "username",
       align: "center",
       width: "10%",
       ellipsis: true,
@@ -158,18 +214,56 @@ function Booking() {
   ];
   return (
     <>
-      <Row>
-        <Col span={12}>
-          <Input
-            placeholder="Search Booking"
-            prefix={<SearchOutlined />}
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            onPressEnter={() => console.log("Search for:", searchText)}
-            style={{ width: "100%", marginBottom: "10px" }}
+      <Row
+        align={"bottom"}
+        style={{
+          margin: "5px 0px 10px",
+          width: "100%",
+          justifyContent: "space-between",
+        }}
+      >
+        <Col span={6}>
+          <Select
+            allowClear
+            options={branchOptions}
+            style={{ width: "100%" }}
+            placeholder="Select branch"
+            label="name"
+            onClear={() => setBranchName("")}
+            onSelect={(value, option) => setBranchName(option.label)}
           />
         </Col>
-        <Col span={12} style={{ textAlign: "right" }}>
+        <Col span={6}>
+          <Input
+            allowClear
+            placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </Col>
+        <Col span={6}>
+          <Select
+            allowClear
+            style={{ width: "100%" }}
+            placeholder="Select status"
+            options={[
+              { value: true, label: "Completed" },
+              { value: false, label: "Booked" },
+            ]}
+            onClear={() => setStatus(null)}
+            onSelect={(value) => setStatus(value)}
+          />
+        </Col>
+        <Col>
+          <SearchButton
+            onFetch={() =>
+              fetchBookingList(0, meta.pageSize, branchName, username, status)
+            }
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24} style={{ textAlign: "right", margin: "5px 0px 15px" }}>
           <ModalCreateBooking
             isOpen={isCreateModalOpen}
             setIsOpen={setIsCreateModalOpen}
@@ -184,7 +278,34 @@ function Booking() {
 
       <Row>
         <Col span={24}>
-          <Table columns={columns} dataSource={bookingData} />
+          <Table
+            rowKey={"bookingId"}
+            style={{ marginBottom: "10px" }}
+            columns={columns}
+            dataSource={bookingData}
+            pagination={false}
+          />
+          {bookingData.length > 0 && (
+            <Col span={24}>
+              <Flex justify="flex-end">
+                <Pagination
+                  size="small"
+                  pageSizeOptions={[10, 20, 30, 40, 50]}
+                  locale={{ items_per_page: "/ page" }}
+                  current={meta.current + 1}
+                  pageSize={meta.pageSize}
+                  total={meta.total}
+                  showTotal={(total, range) =>
+                    `${range[0]}-${range[1]} / ${total}`
+                  }
+                  onChange={(page, pageSize) => {
+                    handleChangePage(page, pageSize);
+                  }}
+                  showSizeChanger
+                />
+              </Flex>
+            </Col>
+          )}
         </Col>
       </Row>
 

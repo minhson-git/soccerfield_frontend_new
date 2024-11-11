@@ -3,6 +3,7 @@ import { Layout, Button, theme, Typography } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Sidebar from "../home/Header";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Content } from "antd/es/layout/layout";
 
 const { Header } = Layout;
 const { Title } = Typography;
@@ -36,7 +37,7 @@ const LayoutAdmin = () => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar collapsed={collapsed} />
-      <Layout style={{ marginLeft: collapsed ? 0 : 0 }}>
+      <Layout style={{ marginLeft: collapsed ? 0 : 0, height: "100vh" }}>
         <Header
           style={{
             padding: 0,
@@ -44,6 +45,7 @@ const LayoutAdmin = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            height: "50px",
           }}
         >
           {/* <Navigate to="/admin/branch" /> */}
@@ -53,7 +55,7 @@ const LayoutAdmin = () => {
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               onClick={() => setCollapsed(!collapsed)}
               style={{
-                fontSize: "16px",
+                fontSize: "14px",
                 width: 64,
                 height: 64,
               }}
@@ -63,8 +65,10 @@ const LayoutAdmin = () => {
             </Title>
           </div>
         </Header>
-        <Layout style={{ padding: "76px 16px" }}>
-          <Outlet />
+        <Layout style={{ margin: "55px 16px" }}>
+          <Content style={{ padding: 16, overflow: "auto" }}>
+            <Outlet />
+          </Content>
         </Layout>
       </Layout>
     </Layout>
