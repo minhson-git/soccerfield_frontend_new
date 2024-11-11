@@ -10,7 +10,7 @@ export default function NotFound() {
       <Result
         status="404"
         title="404"
-        subTitle="Xin lỗi, trang không tồn tại !"
+        subTitle="Sorry, page not exist !"
         style={{
           position: "absolute",
           top: "50%",

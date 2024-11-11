@@ -24,15 +24,15 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        path: "branch",
+        path: "branchs",
         element: <Branch />,
       },
       {
-        path: "field",
+        path: "fields",
         element: <Field />,
       },
       {
-        path: "booking",
+        path: "bookings",
         element: <Booking />,
       },
       {
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         element: <User />,
       },
       {
-        path: "role",
+        path: "roles",
         element: <Role />,
       },
     ],

@@ -19,19 +19,19 @@ const Sidebar = ({ collapsed }) => {
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/admin/branch":
+      case "/admin/branchs":
         setSelectedKey("1");
         break;
-      case "/admin/field":
+      case "/admin/fields":
         setSelectedKey("2");
         break;
-      case "/admin/booking":
+      case "/admin/bookings":
         setSelectedKey("3");
         break;
       case "/admin/users":
         setSelectedKey("4");
         break;
-      case "/admin/role":
+      case "/admin/roles":
         setSelectedKey("5");
         break;
       default:
@@ -41,15 +41,15 @@ const Sidebar = ({ collapsed }) => {
 
   const getSelectedKey = () => {
     switch (location.pathname) {
-      case "/admin/branch":
+      case "/admin/branchs":
         return "1";
-      case "/admin/field":
+      case "/admin/fields":
         return "2";
-      case "/admin/booking":
+      case "/admin/bookings":
         return "3";
       case "/admin/users":
         return "4";
-      case "/admin/role":
+      case "/admin/roles":
         return "5";
       default:
         return "1";
@@ -60,17 +60,17 @@ const Sidebar = ({ collapsed }) => {
     {
       key: "1",
       icon: <FontAwesomeIcon icon={faBuilding} />,
-      label: <Link to="/admin/branch">Branch</Link>,
+      label: <Link to="/admin/branchs">Branch</Link>,
     },
     {
       key: "2",
       icon: <FontAwesomeIcon icon={faClipboard} />,
-      label: <Link to="/admin/field">Field</Link>,
+      label: <Link to="/admin/fields">Field</Link>,
     },
     {
       key: "3",
       icon: <FontAwesomeIcon icon={faFilePen} />,
-      label: <Link to="/admin/booking">Booking</Link>,
+      label: <Link to="/admin/bookings">Booking</Link>,
     },
     {
       key: "4",
@@ -80,7 +80,7 @@ const Sidebar = ({ collapsed }) => {
     {
       key: "5",
       icon: <FontAwesomeIcon icon={faStar} />,
-      label: <Link to="/admin/role">Role</Link>,
+      label: <Link to="/admin/roles">Role</Link>,
     },
   ];
 

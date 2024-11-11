@@ -17,15 +17,15 @@ const LayoutAdmin = () => {
 
   const getPageName = (path) => {
     switch (path) {
-      case "/admin/branch":
+      case "/admin/branchs":
         return "Branch";
-      case "/admin/field":
+      case "/admin/fields":
         return "Field";
-      case "/admin/booking":
+      case "/admin/bookings":
         return "Booking";
       case "/admin/users":
-        return "Users";
-      case "/admin/Role":
+        return "User";
+      case "/admin/roles":
         return "Role";
       default:
         return "Home";
