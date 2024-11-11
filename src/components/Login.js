@@ -27,7 +27,14 @@ const Login = ({ user, onLogin, onLogout }) => {
         description: res.data.message,
       });
       window.sessionStorage.setItem("access_token", res.data.data.token);
-      navigate("/admin/branch");
+      window.sessionStorage.setItem("username", username);
+      window.sessionStorage.setItem("userId", res.data.data.userId); // Lưu userId vào sessionStorage
+  
+      if (res?.data?.data?.role !== "admin") {
+        navigate("/user/booking");
+      } else {
+        navigate("/admin/branch");
+      }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -36,7 +43,7 @@ const Login = ({ user, onLogin, onLogout }) => {
         description: "User name or password is incorrect",
       });
     }
-  };
+  };  
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {

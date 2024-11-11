@@ -1,33 +1,116 @@
-// src/pages/History.js
-import React from 'react';
-import './History.css';
+import React, { useEffect, useState } from 'react';
+import { Table, notification } from "antd";
+import axios from "axios";
+import './History.css'; 
 
-const historyData = [
-  { id: 1, fieldName: 'Sân A', date: '2024-10-05', time: '17:00 - 19:00', branch: 'Chi nhánh 1', price: '200,000 VND' },
-  { id: 2, fieldName: 'Sân B', date: '2024-10-10', time: '18:00 - 20:00', branch: 'Chi nhánh 2', price: '300,000 VND' },
-  { id: 3, fieldName: 'Sân C', date: '2024-10-15', time: '16:00 - 18:00', branch: 'Chi nhánh 1', price: '250,000 VND' },
-];
+const BaseUrl = process.env.REACT_APP_BASE_URL;
 
-const History = () => {
+function History() {
+  const [bookingHistory, setBookingHistory] = useState([]);
+  const jwtToken = sessionStorage.getItem("access_token");
+  const userId = sessionStorage.getItem("userId"); 
+
+  useEffect(() => {
+      fetchBookingHistory(userId);
+  }, [userId]);
+
+  // Hàm lấy lịch sử booking của user
+  const fetchBookingHistory = async (userId) => {
+    if (!userId) return;
+
+    try {
+      const res = await axios.get(`${BaseUrl}/bookings`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+        params: { userId: userId },
+      });
+      console.log("Response data:", res?.data);
+
+     
+      setBookingHistory(res?.data?.data?.content || []);
+    } catch (error) {
+      console.error("Error fetching booking history:", error);
+      notification.error({ message: "Failed to fetch booking history" });
+    }
+  };
+
+  const columns = [
+    {
+      title: "Branch",
+      dataIndex: ["field", "branch", "branchName"],
+      key: "branch",
+      align: "center",
+      width: "20%",
+    },
+    {
+      title: "Booking Date",  
+      dataIndex: "bookingDate",
+      key: "bookingDate",
+      align: "center",
+      render: (text) => new Date(text).toLocaleDateString("vi-VN"),
+      width: "20%",
+    },
+    {
+      title: "Start Time", 
+      dataIndex: "startTime",
+      key: "startTime",
+      align: "center",
+      render: (text) =>
+        new Date(text).toLocaleTimeString("vi-VN", {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      width: "20%",
+    },
+    {
+      title: "End Time",  
+      dataIndex: "endTime",
+      key: "endTime",
+      align: "center",
+      render: (text) =>
+        new Date(text).toLocaleTimeString("vi-VN", {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      width: "20%",
+    },
+    {
+      title: "Field Type",  
+      dataIndex: ["field", "fieldType"],
+      key: "fieldType",
+      align: "center",
+      width: "20%",
+    },
+    {
+      title: "Price", 
+      dataIndex: ["field", "pricePerHour"],
+      key: "pricePerHour",
+      align: "center",
+      render: (text) =>
+        text.toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
+      width: "20%",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      align: "center",
+      render: (status) => (status ? "Confirmed" : "Pending"),
+      width: "15%",
+    },
+  ];
+
   return (
-    <div className="history">
-      <h2>Lịch Sử Đặt Sân</h2>
-      <ul className="history-list">
-        {historyData.map((item) => (
-          <li key={item.id} className="history-item">
-            <div className="history-field">
-              <span className="field-name">{item.fieldName}</span> - <span className="branch">{item.branch}</span>
-            </div>
-            <div className="history-details">
-              <p>Ngày: {item.date}</p>
-              <p>Giờ: {item.time}</p>
-              <p>Giá: {item.price}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
+    <div className="table-container">
+      <h2 className="table-title">Booking History</h2>
+      <Table
+        columns={columns}
+        dataSource={Array.isArray(bookingHistory) ? bookingHistory : []}
+        rowKey="bookingId"
+      />
     </div>
   );
-};
+}
 
 export default History;

@@ -7,15 +7,12 @@ import Hero from "../../components/renter/hero/Hero";
 import BookingField from "../../pages/BookingField";
 import HistoryBooking from "../../components/renter/historybooking/History";
 import FieldDetail from "../../components/renter/booking/FieldDetail";
-import Spinner from "../admin/global/Spinner";
+
 import Header from "../renter/header/Header"; // Điều chỉnh đường dẫn theo cấu trúc của bạn
 import Footer from "../renter/footer/Footer";
 import Profile from "../renter/profile/Profile";
 import BookingForm from "../renter/booking_form/BookingForm";
-import HomePage from "../../pages/HomePage";
-import FieldPage from "../../pages/FieldPage";
-import StatisticPage from "../../pages/StatisticPage";
-import CustomerPage from "../../pages/CustomerPage";
+
 const router = createBrowserRouter([
   {
     path: "/admin",
@@ -30,7 +27,7 @@ const router = createBrowserRouter([
   },
   // -----User-----
   {
-    path: "/user/",
+    path: "/user/booking",
     index: true,
     element: (
       <>
@@ -79,39 +76,7 @@ const router = createBrowserRouter([
       </>
     ),
   },
-  // -----Manager-----
-  {
-    path: "/manager/home",
-    element: (
-      <>
-      <HomePage/>
-      </>
-    ),
-  },
-  {
-    path: "/manager/fields",
-    element: (
-      <>
-      <FieldPage/>
-      </>
-    ),
-  },
-  {
-    path: "/manager/statistics",
-    element: (
-      <>
-      <StatisticPage/>
-      </>
-    ),
-  },
-  {
-    path: "/manager/customer-infor",
-    element: (
-      <>
-      <CustomerPage/>
-      </>
-    ),
-  },
+
   {
     path: "/login",
     element: <Login />,
