@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { notification, Modal, Form, Input, Button } from 'antd';
 import axios from 'axios';
 import './Profile.css';
+import { useNavigate } from 'react-router-dom';
 
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -13,6 +14,7 @@ function Profile() {
   const username = sessionStorage.getItem("username");
   const userId = sessionStorage.getItem("userId");
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (username) {
@@ -45,6 +47,10 @@ function Profile() {
       email: userProfile.email,
     });
   };
+
+  const handleBack = () => {
+    navigate("/user/home");
+  }
 
   const handleSaveClick = async (values) => {
     setLoading(true);
@@ -100,7 +106,7 @@ function Profile() {
         </div>
         <div className="profile-actions">
           <Button onClick={handleEditClick}>Edit Account</Button>
-          <Button>Change Password</Button>
+          <Button onClick={handleBack}>Back to Home</Button>
         </div>
       </div>
 

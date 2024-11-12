@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Table, notification } from "antd";
+import { Button, Table, notification } from "antd";
 import axios from "axios";
 import './History.css'; 
+import { useNavigate } from 'react-router-dom';
 
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -9,6 +10,7 @@ function History() {
   const [bookingHistory, setBookingHistory] = useState([]);
   const jwtToken = sessionStorage.getItem("access_token");
   const userId = sessionStorage.getItem("userId");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userId) {
@@ -117,10 +119,14 @@ function History() {
       <h2 className="table-title">Booking History</h2>
       <div className="table-container">
         <Table
+        style={{ marginBottom : "10px" }}
           columns={columns}
           dataSource={Array.isArray(bookingHistory) ? bookingHistory : []}
           rowKey="bookingId"
-        />
+        />  
+        <div className='history-actions'>
+          <Button onClick={() =>navigate("/user/home")}>Back to Home</Button>
+        </div>
       </div>
     </div>
   );
