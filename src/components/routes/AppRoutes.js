@@ -5,7 +5,7 @@ import HistoryBooking from "../../components/renter/historybooking/History";
 import BookingField from "../../pages/BookingField";
 import LayoutAdmin from "../admin/layout/Layout";
 import Booking from "../admin/pages/booking/Booking";
-import Branch from "../admin/pages/branch/Branch";
+import Branch from "../admin/pages/Branch/Branch";
 import Field from "../admin/pages/field/Field";
 import Role from "../admin/pages/role/role";
 import User from "../admin/pages/user/user";
@@ -69,7 +69,6 @@ const router = createBrowserRouter([
     path: "/user/history",
     element: (
       <>
-        <Header />
         <HistoryBooking />
         <Footer />
       </>

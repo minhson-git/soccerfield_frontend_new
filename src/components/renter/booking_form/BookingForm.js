@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './BookingForm.css';
+import { notification } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
 const BookingForm = () => {
     const jwtToken = sessionStorage.getItem("access_token");
-    const fieldId = sessionStorage.getItem("fieldId"); // Get fieldId from session
+    const fieldId = sessionStorage.getItem("fieldId"); 
     const location = useLocation();
-    const { field } = location.state || {}; // field data passed through the route
+    const { field } = location.state || {}; 
     const [selectedTime, setSelectedTime] = useState("");
     const [selectedDate, setSelectedDate] = useState("");
-    const [userData, setUserData] = useState(null);
+    const navigate = useNavigate();
 
-    // Các khung giờ từ 6:00 đến 24:00, mỗi khung là 1 tiếng 30 phút
+
     const timeSlots = [];
     for (let hour = 6; hour < 24; hour++) {
         const startTime = `${String(hour).padStart(2, '0')}:00`;
@@ -23,28 +25,6 @@ const BookingForm = () => {
     }
 
     const today = new Date().toISOString().split("T")[0];
-
-    // Fetch user data from session storage
-    useEffect(() => {
-        const userId = sessionStorage.getItem('userId');
-        if (userId) {
-            fetchUserData(userId);
-        }
-    }, []);
-
-    // Function to fetch user data from the backend if needed
-    const fetchUserData = async (userId) => {
-        try {
-            const response = await axios.get(`${BaseUrl}/users/${userId}`, {
-                headers: {
-                    Authorization: `Bearer ${jwtToken}`,
-                },
-            });
-            setUserData(response.data.data); // Assuming the response structure
-        } catch (error) {
-            console.error("Error fetching user data:", error);
-        }
-    };
 
     const handleDateChange = (e) => {
         setSelectedDate(e.target.value);
@@ -60,16 +40,24 @@ const BookingForm = () => {
         const userId = sessionStorage.getItem('userId');
         if (!userId || !selectedDate || !selectedTime || !fieldId) return;
 
-        // Prepare booking data using selected date, time, and pre-filled information
-        const bookingData = {
-            userId: userId, // userId from session
-            fieldId: fieldId, // fieldId from session
-            date: selectedDate, 
-            timeSlot: selectedTime,
-            fieldType: field?.fieldType || "", // If field is available from location state, use it
-            pricePerHour: field?.pricePerHour || 0, // Use pricePerHour from field
-        };
+        // Split start and end time
+        const [startTime, endTime] = selectedTime.split(" - ");
+        const formattedStartTimeSlot = `${selectedDate}T${startTime}:00`; // ISO format
+        const formattedEndTimeSlot = `${selectedDate}T${endTime}:00`;     // ISO format
 
+        const bookingData = {
+            user: {
+                userId,
+            },
+            field: {
+                fieldId,
+            },
+            startTime: formattedStartTimeSlot,
+            endTime: formattedEndTimeSlot,
+            bookingDate: selectedDate,
+            status: false,
+        };
+        console.log(bookingData);
         try {
             const response = await axios.post(`${BaseUrl}/bookings`, bookingData, {
                 headers: {
@@ -77,24 +65,26 @@ const BookingForm = () => {
                 },
             });
 
-            if (response.status === 200) {
-                console.log("Đặt sân thành công!");
+            if (response.status === 201) {
+                notification.success({message: response?.data?.message});
+                navigate("/user/history");
+                
             } else {
-                console.error("Đặt sân thất bại!");
+                notification.error({message: "Failed to book field"});
             }
         } catch (error) {
-            console.error("Có lỗi xảy ra:", error);
+            console.error(error);
         }
     };
 
     return (
         <div className="booking-form">
-            <h2>Đặt sân</h2>
+            <h2>Booking Field</h2>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Thời gian:
+                    Time:
                     <select value={selectedTime} onChange={handleTimeChange} required>
-                        <option value="">Chọn khung giờ</option>
+                        <option value="">Time Frame</option>
                         {timeSlots.map((slot, index) => (
                             <option key={index} value={`${slot.start} - ${slot.end}`}>
                                 {slot.start} - {slot.end}
@@ -103,11 +93,11 @@ const BookingForm = () => {
                     </select>
                 </label>
                 <label>
-                    Ngày:
+                    Date
                     <input type="date" value={selectedDate} onChange={handleDateChange} min={today} required />
                 </label>
                     
-                <button type="submit">Xác nhận đặt</button>
+                <button type="submit">Confirm</button>
             </form>
         </div>
     );
