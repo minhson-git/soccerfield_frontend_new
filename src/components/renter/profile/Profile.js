@@ -38,11 +38,13 @@ function Profile() {
     }
   };
 
+
   const handleEditClick = () => {
     setIsEditing(true);
     form.setFieldsValue({
       fullname: userProfile.fullname,
       citizenId: userProfile.citizenId,
+      username: userProfile.username,
       phone: userProfile.phone,
       email: userProfile.email,
     });
@@ -65,6 +67,8 @@ function Profile() {
         }
       );
       notification.success({ message: res?.data?.message || "Profile updated successfully" });
+      window.sessionStorage.removeItem("username")
+      window.sessionStorage.setItem("username", res?.data?.data?.username)
       setUserProfile(values);
       setIsEditing(false);
       setLoading(false);
@@ -95,6 +99,10 @@ function Profile() {
         <div className="profile-field">
           <label>Citizen ID:</label>
           <span>{userProfile.citizenId}</span>
+        </div>
+        <div className="profile-field">
+          <label>Username:</label>
+          <span>{userProfile.username}</span>
         </div>
         <div className="profile-field">
           <label>Phone Number:</label>
@@ -132,6 +140,13 @@ function Profile() {
             label="Citizen ID"
             name="citizenId"
             rules={[{ required: true, message: "Please enter citizen ID" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: "Please enter username" }]}
           >
             <Input />
           </Form.Item>
